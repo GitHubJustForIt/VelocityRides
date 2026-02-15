@@ -1,54 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Pro Dashboard</title>
 
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- Style -->
 <link rel="stylesheet" href="style.css">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 </head>
-
 <body>
 
 <!-- LOGIN -->
 <div id="loginBox">
-
   <div class="login-card">
-
     <h2><i class="fa-solid fa-user-lock"></i> Login</h2>
-
     <input id="usernameInput" placeholder="Username">
-
-    <button id="loginBtn">
-      Login
-    </button>
-
+    <button id="loginBtn"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
   </div>
-
 </div>
-
 
 <!-- APP -->
 <div id="app" style="display:none">
 
 <header>
-
-<h1><i class="fa-solid fa-gamepad"></i> Dashboard</h1>
-
-<p id="userDisplay"></p>
-
+  <h1><i class="fa-solid fa-gamepad"></i> Dashboard</h1>
+  <p id="userDisplay"></p>
+  <nav>
+    <button onclick="showAll()"><i class="fa-solid fa-layer-group"></i> All</button>
+    <button onclick="showPending()"><i class="fa-solid fa-clock"></i> Pending</button>
+    <button onclick="showPurchased()"><i class="fa-solid fa-check"></i> Purchased</button>
+  </nav>
 </header>
 
 <main id="grid"></main>
 
 </div>
 
+<!-- MODAL -->
+<div id="modal">
+  <div class="modal-box">
+    <img id="m-img">
+    <h2 id="m-title"></h2>
+    <p id="m-desc"></p>
+    <p><i class="fa-solid fa-dollar-sign"></i> Price: <b id="m-price"></b></p>
+    <p><i class="fa-solid fa-ticket"></i> Gamepass: <b id="m-gamepass"></b></p>
+    <button class="btn" onclick="addPending()"><i class="fa-solid fa-cart-plus"></i> Add to Pending</button>
+    <button class="btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i> Close</button>
+  </div>
+</div>
+
+<footer>© 2026 • Pro Dashboard</footer>
 
 <!-- SCRIPTS -->
 <script src="data.js"></script>
