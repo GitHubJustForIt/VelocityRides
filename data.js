@@ -1,7 +1,5 @@
-// Discord Webhook
 const WEBHOOK_URL = "https://discordapp.com/api/webhooks/1472624952917364998/dLUkhFwa2ZyEhrNbOHfwyRe3ufr8BtwzgH_kcni2fgtugwfaABMOq3vwdPTzfqJ9Q2OE";
 
-// Projekte / Templates
 const projects = [
   {
     title:"Space Adventure",
@@ -20,7 +18,7 @@ const projects = [
     gamepass:"Not Required",
     image:"img/race.jpg",
     purchased:true,
-    buyer:"Bloxy",
+    buyer:"Max",
     tags:["Racing","Speed","Cars"]
   },
   {
