@@ -11,8 +11,8 @@ const projects = [
         price: "$14.99",
         gamepass: "Required: Speed Pass v2",
         image: "https://via.placeholder.com/300x180/1a1a1a/ffffff?text=Neon+City",
-        purchased: false,
-        buyer: "",
+        purchased: true,
+        buyer: "lol",
         tags: ["Racing", "Neon"]
     },
     {
