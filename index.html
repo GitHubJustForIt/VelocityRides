@@ -4,12 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Velocity Rides</title>
-
-<!-- Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<!-- Style -->
 <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
 
@@ -24,27 +20,25 @@
 
 <!-- APP -->
 <div id="app" style="display:none">
+  <header>
+    <h1><i class="fa-solid fa-rocket"></i> Velocity Rides</h1>
+    <p id="userDisplay"></p>
+    <nav>
+      <button class="nav-btn" onclick="showAll()"><i class="fa-solid fa-layer-group"></i> All</button>
+      <button class="nav-btn" onclick="showPending()"><i class="fa-solid fa-clock"></i> Pending</button>
+      <button class="nav-btn" onclick="showPurchased()"><i class="fa-solid fa-check"></i> Purchased</button>
+    </nav>
+  </header>
 
-<header>
-  <h1><i class="fa-solid fa-rocket"></i> Velocity Rides</h1>
-  <p id="userDisplay"></p>
-  <nav>
-    <button class="nav-btn" onclick="showAll()"><i class="fa-solid fa-layer-group"></i> All</button>
-    <button class="nav-btn" onclick="showPending()"><i class="fa-solid fa-clock"></i> Pending</button>
-    <button class="nav-btn" onclick="showPurchased()"><i class="fa-solid fa-check"></i> Purchased</button>
-  </nav>
-</header>
+  <!-- Steps -->
+  <div id="steps">
+    <div class="step"><i class="fa-solid fa-hand-pointer"></i> 1. Set to Pending</div>
+    <div class="step"><i class="fa-solid fa-circle-check"></i> 2. Purchased with Success</div>
+    <div class="step"><i class="fa-solid fa-clock"></i> 3. Waiting for our team to contact you</div>
+    <div class="step"><i class="fa-solid fa-wrench"></i> 4. Our team builds it</div>
+  </div>
 
-<!-- Step-by-Step Anleitung -->
-<div id="steps">
-  <div class="step"><i class="fa-solid fa-hand-pointer"></i> 1. Set to Pending</div>
-  <div class="step"><i class="fa-solid fa-circle-check"></i> 2. Purchased with Success</div>
-  <div class="step"><i class="fa-solid fa-clock"></i> 3. Waiting for our team to contact you</div>
-  <div class="step"><i class="fa-solid fa-wrench"></i> 4. Our team builds it</div>
-</div>
-
-<main id="grid"></main>
-
+  <main id="grid"></main>
 </div>
 
 <!-- MODAL -->
@@ -56,7 +50,7 @@
     <p><i class="fa-solid fa-dollar-sign"></i> Price: <b id="m-price"></b></p>
     <p><i class="fa-solid fa-ticket"></i> Gamepass: <b id="m-gamepass"></b></p>
     <p id="m-tags"></p>
-    <p>Enter your Username and Contact (TikTok) to confirm:</p>
+    <p>Confirm Username + Contact:</p>
     <input id="confirmUser" placeholder="Your Username">
     <input id="contactInfo" placeholder="Contact (TikTok)">
     <button class="btn" onclick="addPending()"><i class="fa-solid fa-cart-plus"></i> Confirm Pending</button>
@@ -65,14 +59,11 @@
 </div>
 
 <footer>
-  © VelocityRides 2026 • All Rights Reserved. <br>
-  Products are copyright protected.
+  © VelocityRides 2026 • All Rights Reserved. Products are copyright protected.
 </footer>
 
-<!-- Scripts -->
 <script src="data.js"></script>
 <script src="login.js"></script>
 <script src="app.js"></script>
-
 </body>
 </html>
