@@ -2,9 +2,16 @@ const grid = document.getElementById("grid");
 const userDisplay = document.getElementById("userDisplay");
 const modal = document.getElementById("modal");
 
+// Modal Elemente
+const mImg = document.getElementById("m-img");
+const mTitle = document.getElementById("m-title");
+const mDesc = document.getElementById("m-desc");
+const mPrice = document.getElementById("m-price");
+const mGamepass = document.getElementById("m-gamepass");
+
 let selected = null;
 
-// INIT
+// INIT App
 function initApp(){
   userDisplay.innerHTML = `<i class="fa-solid fa-user"></i> ${username}`;
   render(projects);
@@ -41,12 +48,6 @@ function render(list){
 }
 
 // MODAL
-const mImg = document.getElementById("m-img");
-const mTitle = document.getElementById("m-title");
-const mDesc = document.getElementById("m-desc");
-const mPrice = document.getElementById("m-price");
-const mGamepass = document.getElementById("m-gamepass");
-
 function openModal(i){
   selected = i;
   const p = projects[i];
@@ -66,7 +67,6 @@ function closeModal(){
 function addPending(){
   const p = projects[selected];
   if(pending.includes(p.title)) return alert("Already pending");
-
   pending.push(p.title);
   localStorage.setItem("pending", JSON.stringify(pending));
 
