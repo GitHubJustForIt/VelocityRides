@@ -7,10 +7,11 @@ const projects = [
     title:"Space Adventure",
     description:"Explore galaxies and planets.",
     price:"$9.99",
-    gamepass:"Required",
+    gamepass:"Required: Galaxy Pass",
     image:"img/space.jpg",
     purchased:false,
-    buyer:""
+    buyer:"",
+    tags:["Space","Adventure","Galaxies"]
   },
   {
     title:"Racing Pro",
@@ -19,15 +20,17 @@ const projects = [
     gamepass:"Not Required",
     image:"img/race.jpg",
     purchased:true,
-    buyer:"Max"
+    buyer:"Bloxy",
+    tags:["Racing","Speed","Cars"]
   },
   {
     title:"Zombie World",
     description:"Survive zombies and collect resources.",
     price:"$4.99",
-    gamepass:"Required",
+    gamepass:"Required: Survival Pass",
     image:"img/zombie.jpg",
     purchased:false,
-    buyer:""
+    buyer:"",
+    tags:["Zombie","Survival","Horror"]
   }
 ];
