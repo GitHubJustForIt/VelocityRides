@@ -1,35 +1,27 @@
 const loginBox = document.getElementById("loginBox");
-const app = document.getElementById("app");
-
 const loginBtn = document.getElementById("loginBtn");
 const usernameInput = document.getElementById("usernameInput");
+const app = document.getElementById("app");
+
+let username = localStorage.getItem("user") || "";
+let pending = JSON.parse(localStorage.getItem("pending")) || [];
 
 loginBtn.addEventListener("click", login);
 
-function login(){
-
-  const name = usernameInput.value.trim();
-
-  if(!name){
-    alert("Enter username");
-    return;
-  }
-
-  localStorage.setItem("user", name);
-
+if(username){
   startApp();
 }
 
-/* AUTO LOGIN */
-
-if(localStorage.getItem("user")){
+function login(){
+  const name = usernameInput.value.trim();
+  if(!name) return alert("Enter username");
+  localStorage.setItem("user", name);
+  username = name;
   startApp();
 }
 
 function startApp(){
-
-  loginBox.style.display="none";
-  app.style.display="block";
-
+  loginBox.style.display = "none";
+  app.style.display = "block";
   initApp();
 }
