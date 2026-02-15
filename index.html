@@ -3,92 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Velocity Rides Dashboard</title>
+    <title>Velocity Rides | Premium Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div id="login-container">
-        <div class="login-box">
+        <div class="login-box fade-in">
+            <div class="login-logo"><i class="fas fa-rocket"></i></div>
             <h1>Velocity Rides</h1>
             <p>Admin & Shop Dashboard</p>
-            <input type="text" id="username-input" placeholder="Dein Username..." autocomplete="off">
-            <button id="login-btn">Login <i class="fas fa-sign-in-alt"></i></button>
+            <div class="input-group">
+                <input type="text" id="username-input" placeholder=" " autocomplete="off">
+                <label>Username</label>
+            </div>
+            <button id="login-btn">Enter Dashboard <i class="fas fa-arrow-right"></i></button>
         </div>
     </div>
 
     <div id="app" class="hidden">
         
-        <header>
-            <div class="logo">
-                <i class="fas fa-rocket"></i> Velocity Rides
+        <nav class="navbar">
+            <div class="nav-brand"><i class="fas fa-rocket"></i> VRides</div>
+            <div class="nav-user">
+                <span>Welcome, <b id="display-username">User</b></span>
+                <button id="logout-btn" title="Logout"><i class="fas fa-power-off"></i></button>
             </div>
-            <div class="user-info">
-                Hallo, <span id="display-username">User</span>
-                <button id="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
+        </nav>
+
+        <header class="hero-section">
+            <h1 class="hero-title">Velocity Rides</h1>
+            <p class="hero-subtitle">Premium Assets & Development Templates</p>
+            <div class="hero-stats">
+                <span><i class="fas fa-check-circle"></i> Verified</span>
+                <span><i class="fas fa-bolt"></i> Instant Delivery</span>
+                <span><i class="fas fa-shield-alt"></i> Secure</span>
             </div>
         </header>
 
-        <section class="steps-container">
-            <div class="step">
-                <div class="icon"><i class="fas fa-hourglass-half"></i></div>
-                <p>1. Set to Pending</p>
-            </div>
-            <div class="line"></div>
-            <div class="step">
-                <div class="icon"><i class="fas fa-check-circle"></i></div>
-                <p>2. Waiting for Team</p>
-            </div>
-            <div class="line"></div>
-            <div class="step">
-                <div class="icon"><i class="fas fa-cogs"></i></div>
-                <p>3. Team builds Product</p>
-            </div>
-            <div class="line"></div>
-            <div class="step">
-                <div class="icon"><i class="fas fa-file-download"></i></div>
-                <p>4. Success / Owned</p>
+        <section class="steps-wrapper">
+            <div class="steps-container">
+                <div class="step">
+                    <div class="icon-box"><i class="fas fa-mouse-pointer"></i></div>
+                    <p>Select</p>
+                </div>
+                <div class="line"></div>
+                <div class="step">
+                    <div class="icon-box"><i class="fas fa-hourglass-half"></i></div>
+                    <p>Pending</p>
+                </div>
+                <div class="line"></div>
+                <div class="step">
+                    <div class="icon-box"><i class="fas fa-tools"></i></div>
+                    <p>Build</p>
+                </div>
+                <div class="line"></div>
+                <div class="step">
+                    <div class="icon-box success"><i class="fas fa-star"></i></div>
+                    <p>Owned</p>
+                </div>
             </div>
         </section>
 
-        <section class="filters">
-            <button class="filter-btn active" onclick="filterProjects('all')">All Products</button>
-            <button class="filter-btn" onclick="filterProjects('pending')">My Pending</button>
-            <button class="filter-btn" onclick="filterProjects('purchased')">My Owned</button>
-        </section>
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterProjects('all')">All Templates</button>
+            <button class="filter-btn" onclick="filterProjects('pending')">Pending</button>
+            <button class="filter-btn" onclick="filterProjects('purchased')">My Library</button>
+        </div>
 
         <main id="projects-grid">
             </main>
 
-        <footer>
-            &copy; 2026 Velocity Rides. All Rights Reserved.
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h4>Velocity Rides</h4>
+                    <p>Providing high-quality digital assets for developers since 2024.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Copyright Information</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <a href="#">Support Discord</a>
+                    <a href="#">Twitter / X</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 Velocity Rides Development. All rights reserved. Unauthorized redistribution is prohibited.
+            </div>
         </footer>
     </div>
 
     <div id="product-modal" class="modal hidden">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
-            <div class="modal-body">
-                <img id="modal-img" src="" alt="Product Image">
-                <div class="modal-details">
+            <div class="modal-split">
+                <div class="modal-image-col">
+                    <img id="modal-img" src="" alt="Product">
+                </div>
+                <div class="modal-info-col">
                     <h2 id="modal-title">Title</h2>
-                    <span id="modal-price" class="badge-price">$0.00</span>
-                    <p id="modal-desc">Description goes here...</p>
+                    <div class="price-tag" id="modal-price">$0.00</div>
+                    <p id="modal-desc">Description...</p>
                     
-                    <div class="modal-info-box">
-                        <p><i class="fas fa-gamepad"></i> <strong>Gamepass:</strong> <span id="modal-gamepass">-</span></p>
-                        <div id="modal-tags" class="tags-container"></div>
+                    <div class="specs-box">
+                        <div><i class="fas fa-gamepad"></i> <span id="modal-gamepass"></span></div>
                     </div>
-
-                    <hr>
+                    <div id="modal-tags" class="tags-row"></div>
 
                     <div id="modal-action-area">
-                        <h3>Confirm Purchase Request</h3>
-                        <label>Dein Kontakt (Discord/TikTok):</label>
-                        <input type="text" id="contact-input" placeholder="z.B. User#1234">
-                        <button id="confirm-pending-btn" class="action-btn">
-                            Confirm Pending <i class="fas fa-paper-plane"></i>
+                        <hr>
+                        <label>Discord / Contact Info</label>
+                        <input type="text" id="contact-input" placeholder="username#0000">
+                        <button id="confirm-pending-btn" class="glow-btn">
+                            Request Purchase <i class="fas fa-arrow-right"></i>
                         </button>
                     </div>
                     <div id="modal-status-msg" class="hidden"></div>
