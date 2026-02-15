@@ -3,88 +3,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Velocity Rides | Premium Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Velocity Rides Dashboard</title>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-
-    <section id="loginBox" class="auth-screen">
-        <div class="login-glow"></div>
-        <div class="glass-card login-panel fade-in">
-            <div class="brand-badge">v1.2</div>
-            <h1>Velocity<span>Rides</span></h1>
-            <p>Authentication required to access templates.</p>
-            <div class="input-wrapper">
-                <input type="text" id="usernameInput" placeholder="Enter Username...">
-                <button onclick="handleLogin()"><i class="fas fa-chevron-right"></i></button>
+    <!-- Login Screen -->
+    <div id="login-screen" class="screen active">
+        <div class="login-container">
+            <div class="login-box">
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                </div>
+                
+                <h1 class="login-title">Velocity Rides</h1>
+                <p class="login-subtitle">Access your digital template dashboard</p>
+                
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" placeholder="Enter your username" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-login">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Enter Dashboard
+                    </button>
+                </form>
+                
+                <p class="login-footer">© 2026 Velocity Rides. All rights reserved.</p>
             </div>
         </div>
-    </section>
+    </div>
 
-    <div id="app" style="display: none;">
-        <header class="top-nav">
-            <div class="nav-inner">
-                <div class="logo">VELOCITY</div>
-                <nav class="main-tabs">
-                    <button onclick="showAll()" id="btn-all" class="tab active">Explore</button>
-                    <button onclick="showPending()" id="btn-pending" class="tab">Queue</button>
-                    <button onclick="showPurchased()" id="btn-purchased" class="tab">Vault</button>
-                </nav>
-                <div class="user-tag" id="displayUser"></div>
+    <!-- Dashboard Screen -->
+    <div id="dashboard-screen" class="screen">
+        <!-- Header -->
+        <header class="header">
+            <div class="container header-content">
+                <div class="header-left">
+                    <div class="logo-icon-small">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="header-info">
+                        <h1 class="header-title">Velocity Rides</h1>
+                        <p class="header-subtitle">Digital Templates</p>
+                    </div>
+                </div>
+                
+                <div class="header-right">
+                    <div class="user-info">
+                        <p class="user-label">Logged in as</p>
+                        <p class="user-name" id="logged-user"></p>
+                    </div>
+                    <button id="logout-btn" class="btn btn-outline">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="btn-text">Logout</span>
+                    </button>
+                </div>
             </div>
         </header>
 
-        <section class="process-container">
-            <div class="process-line">
-                <div class="p-step active" data-step="1">
-                    <div class="dot"><i class="fas fa-search"></i></div>
-                    <span>Wählen</span>
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="container">
+                <!-- Steps Indicator -->
+                <div class="steps-container">
+                    <h3 class="steps-title">Purchase Process</h3>
+                    <div class="steps-wrapper">
+                        <div class="steps-line"></div>
+                        <div class="steps">
+                            <div class="step">
+                                <div class="step-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <p class="step-label">Set to Pending</p>
+                            </div>
+                            <div class="step">
+                                <div class="step-icon">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <p class="step-label">Purchased with Success</p>
+                            </div>
+                            <div class="step">
+                                <div class="step-icon">
+                                    <i class="fas fa-comment-dots"></i>
+                                </div>
+                                <p class="step-label">Waiting for team contact</p>
+                            </div>
+                            <div class="step">
+                                <div class="step-icon">
+                                    <i class="fas fa-wrench"></i>
+                                </div>
+                                <p class="step-label">Team builds product</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="p-step" data-step="2">
-                    <div class="dot"><i class="fas fa-clock"></i></div>
-                    <span>Pending</span>
+
+                <!-- Filters -->
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">
+                        <i class="fas fa-filter"></i>
+                        All Templates
+                    </button>
+                    <button class="filter-btn" data-filter="pending">
+                        <i class="fas fa-clock"></i>
+                        Pending
+                    </button>
+                    <button class="filter-btn" data-filter="purchased">
+                        <i class="fas fa-shopping-bag"></i>
+                        Purchased
+                    </button>
                 </div>
-                <div class="p-step" data-step="3">
-                    <div class="dot"><i class="fas fa-envelope"></i></div>
-                    <span>Kontakt</span>
+
+                <!-- Templates Grid -->
+                <div id="templates-grid" class="templates-grid">
+                    <!-- Cards will be inserted here by app.js -->
                 </div>
-                <div class="p-step" data-step="4">
-                    <div class="dot"><i class="fas fa-check-double"></i></div>
-                    <span>Fertig</span>
+
+                <!-- Empty State -->
+                <div id="empty-state" class="empty-state" style="display: none;">
+                    <div class="empty-icon">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h3 class="empty-title">No templates found</h3>
+                    <p class="empty-text">Try adjusting your filters</p>
                 </div>
             </div>
-        </section>
+        </main>
 
-        <main id="productGrid" class="main-content"></main>
-
-        <footer class="pro-footer">
-            <div class="footer-content">
-                <div class="f-left">
-                    <p>&copy; 2026 VELOCITY RIDES. All rights reserved.</p>
-                    <span>Built for the next generation of digital creators.</span>
-                </div>
-                <div class="f-right">
-                    <a href="#">Terms</a>
-                    <a href="#">Privacy</a>
-                    <a href="#" class="status-indicator"><span class="live-dot"></span> System Live</a>
-                </div>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container footer-content">
+                <p>© 2026 Velocity Rides. All rights reserved.</p>
+                <p class="footer-copyright">All templates and digital products are protected by copyright law.</p>
             </div>
         </footer>
     </div>
 
-    <div id="modal" class="modal-system">
-        <div class="modal-blur" onclick="closeModal()"></div>
-        <div class="modal-window slide-up">
-            <div id="modalDetails"></div>
-            <div class="action-footer">
-                <input type="text" id="contactInput" placeholder="Discord Tag (e.g. User#0000)">
-                <button id="confirmBtn" class="btn-action">Reserve Item</button>
+    <!-- Modal -->
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal">
+            <button class="modal-close" id="modal-close">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="modal-content">
+                <div class="modal-image-section">
+                    <img id="modal-image" src="" alt="" class="modal-image">
+                    <div class="modal-image-overlay"></div>
+                    <div id="modal-badge" class="badge"></div>
+                    <div class="modal-price-tag">
+                        <span id="modal-price"></span>
+                    </div>
+                </div>
+                
+                <div class="modal-details-section">
+                    <h2 id="modal-title" class="modal-title"></h2>
+                    <p id="modal-description" class="modal-description"></p>
+                    
+                    <div class="modal-gamepass">
+                        <div class="gamepass-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <div>
+                            <p class="gamepass-label">Required Gamepass</p>
+                            <p id="modal-gamepass" class="gamepass-name"></p>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-tags-section">
+                        <div class="tags-header">
+                            <i class="fas fa-tag"></i>
+                            <span>Tags</span>
+                        </div>
+                        <div id="modal-tags" class="modal-tags"></div>
+                    </div>
+                    
+                    <div class="modal-user-info">
+                        <p class="user-info-label">Logged in as</p>
+                        <p id="modal-username" class="user-info-name"></p>
+                    </div>
+                    
+                    <!-- Purchase Form -->
+                    <form id="purchase-form" class="purchase-form">
+                        <div class="form-group">
+                            <label for="contact-input">Contact Information</label>
+                            <input type="text" id="contact-input" placeholder="Discord, Email, or Phone" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-purchase">
+                            <i class="fas fa-paper-plane"></i>
+                            Confirm Pending Purchase
+                        </button>
+                    </form>
+                    
+                    <!-- Status Messages -->
+                    <div id="status-pending" class="status-message status-warning" style="display: none;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div>
+                            <p class="status-title">Purchase Pending</p>
+                            <p class="status-text">Your purchase request is being processed. The team will contact you soon.</p>
+                        </div>
+                    </div>
+                    
+                    <div id="status-sold" class="status-message status-info" style="display: none;">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <p class="status-title">Already Sold</p>
+                            <p id="status-sold-text" class="status-text"></p>
+                        </div>
+                    </div>
+                    
+                    <div id="status-owned" class="status-message status-success" style="display: none;">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <p class="status-title">You Own This</p>
+                            <p class="status-text">This template is in your collection.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Scripts - Order matters! -->
     <script src="data.js"></script>
     <script src="login.js"></script>
     <script src="app.js"></script>
