@@ -3,189 +3,150 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Product Dashboard</title>
+<title>Dashboard</title>
 
 <style>
 
-/* ================= THEME ================= */
-
-:root {
-  --bg:#0d0f14;
-  --card:#171a22;
-  --accent:#5f7cff;
-  --text:#fff;
-  --muted:#aaa;
+/* THEME */
+:root{
+--bg:#0d0f14;
+--card:#171a22;
+--accent:#5f7cff;
+--text:#fff;
+--muted:#aaa;
 }
 
-* {
-  box-sizing:border-box;
-  font-family:Segoe UI,sans-serif;
-}
+*{box-sizing:border-box;font-family:Segoe UI,sans-serif}
 
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--text);
-}
-
-/* ================= HEADER ================= */
+body{margin:0;background:var(--bg);color:var(--text)}
 
 header{
-  padding:25px;
-  text-align:center;
-  border-bottom:1px solid #222;
-}
-
-nav{
-  margin-top:15px;
+padding:25px;
+text-align:center;
+border-bottom:1px solid #222;
 }
 
 nav button{
-  background:#222;
-  color:white;
-  border:none;
-  padding:8px 15px;
-  border-radius:6px;
-  cursor:pointer;
-  margin:0 5px;
+background:#222;
+color:#fff;
+border:none;
+padding:8px 14px;
+border-radius:6px;
+margin:5px;
+cursor:pointer;
 }
 
-nav button:hover{
-  background:var(--accent);
-}
-
-/* ================= GRID ================= */
+nav button:hover{background:var(--accent)}
 
 #grid{
-  padding:30px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:25px;
+padding:30px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:25px;
 }
-
-/* ================= CARD ================= */
 
 .card{
-  background:var(--card);
-  border-radius:12px;
-  overflow:hidden;
-  box-shadow:0 10px 25px rgba(0,0,0,.4);
-  transition:.25s;
-  position:relative;
+background:var(--card);
+border-radius:12px;
+overflow:hidden;
+position:relative;
+box-shadow:0 8px 20px rgba(0,0,0,.4);
+transition:.25s;
+cursor:pointer;
 }
 
-.card:hover{
-  transform:translateY(-5px);
-}
+.card:hover{transform:translateY(-5px)}
 
 .card img{
-  width:100%;
-  height:180px;
-  object-fit:cover;
+width:100%;
+height:180px;
+object-fit:cover;
 }
 
-.card-content{
-  padding:15px;
-}
-
-.card p{
-  color:var(--muted);
-  font-size:.9rem;
-}
-
-/* SOLD */
+.card-content{padding:15px}
 
 .sold{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.85);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:2rem;
-  font-weight:bold;
-  color:red;
+position:absolute;
+inset:0;
+background:rgba(0,0,0,.85);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:2rem;
+color:red;
+font-weight:bold;
 }
-
-/* ================= MODAL ================= */
 
 #modal{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.85);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:999;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.85);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:1000;
 }
 
-#modal.active{
-  display:flex;
-}
+#modal.active{display:flex}
 
 .modal-box{
-  background:var(--card);
-  width:90%;
-  max-width:480px;
-  padding:25px;
-  border-radius:12px;
+background:var(--card);
+padding:25px;
+width:90%;
+max-width:450px;
+border-radius:12px;
 }
 
 .modal-box img{
-  width:100%;
-  border-radius:8px;
-  margin-bottom:10px;
+width:100%;
+border-radius:8px;
+margin-bottom:10px;
 }
 
 .btn{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  border:none;
-  background:var(--accent);
-  color:white;
-  border-radius:6px;
-  cursor:pointer;
+width:100%;
+padding:10px;
+margin-top:10px;
+border:none;
+background:var(--accent);
+color:white;
+border-radius:6px;
+cursor:pointer;
 }
 
-/* ================= LOGIN ================= */
-
 #login{
-  position:fixed;
-  inset:0;
-  background:#000;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:2000;
+position:fixed;
+inset:0;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:2000;
 }
 
 #login-box{
-  background:var(--card);
-  padding:30px;
-  border-radius:12px;
-  width:300px;
-  text-align:center;
+background:var(--card);
+padding:25px;
+border-radius:12px;
+width:300px;
+text-align:center;
 }
 
 #login input{
-  width:100%;
-  padding:10px;
-  margin:10px 0;
-  background:#111;
-  border:1px solid #333;
-  color:white;
-  border-radius:6px;
+width:100%;
+padding:10px;
+background:#111;
+border:1px solid #333;
+color:white;
+border-radius:6px;
+margin:10px 0;
 }
 
-/* ================= FOOTER ================= */
-
 footer{
-  text-align:center;
-  padding:15px;
-  border-top:1px solid #222;
-  color:var(--muted);
+text-align:center;
+padding:15px;
+border-top:1px solid #222;
+color:var(--muted);
 }
 
 </style>
@@ -195,97 +156,97 @@ footer{
 
 <!-- LOGIN -->
 <div id="login">
-  <div id="login-box">
-    <h2>Login</h2>
-    <p>Enter your Roblox Username</p>
-    <input id="usernameInput" placeholder="Roblox Username">
-    <button class="btn" onclick="login()">Login</button>
-  </div>
+ <div id="login-box">
+  <h2>Login</h2>
+  <p>Roblox Username</p>
+  <input id="usernameInput">
+  <button class="btn" onclick="login()">Login</button>
+ </div>
 </div>
 
 <header>
 
-<h1>🎮 Product Dashboard</h1>
-<p id="userDisplay"></p>
+<h1>🎮 Dashboard</h1>
+<p id="user"></p>
 
 <nav>
-  <button onclick="showAll()">All</button>
-  <button onclick="showPending()">Pending</button>
-  <button onclick="showPurchased()">Purchased</button>
+ <button onclick="showAll()">All</button>
+ <button onclick="showPending()">Pending</button>
+ <button onclick="showPurchased()">Purchased</button>
 </nav>
 
 </header>
 
 <main id="grid"></main>
 
-<!-- DETAIL MODAL -->
+<!-- MODAL -->
 <div id="modal">
+ <div class="modal-box">
 
-  <div class="modal-box">
+  <img id="m-img">
 
-    <img id="m-img">
+  <h2 id="m-title"></h2>
 
-    <h2 id="m-title"></h2>
+  <p id="m-desc"></p>
 
-    <p id="m-desc"></p>
+  <p>💲 <b id="m-price"></b></p>
 
-    <p>💲 Price: <b id="m-price"></b></p>
+  <p>🎫 <b id="m-gamepass"></b></p>
 
-    <p>🎫 Gamepass: <b id="m-gamepass"></b></p>
+  <button class="btn" onclick="addPending()">Add to Pending</button>
+  <button class="btn" onclick="closeModal()">Close</button>
 
-    <button class="btn" onclick="addPending()">Add To Pending</button>
-
-    <button class="btn" onclick="closeModal()">Close</button>
-
-  </div>
-
+ </div>
 </div>
 
 <footer>
-© 2026 Your Company • All Rights Reserved
+© 2026 Your Project
 </footer>
 
 <script>
 
-/* ================= DISCORD WEBHOOK ================= */
+/* ================= CONFIG ================= */
 
-const WEBHOOK_URL = "PUT_YOUR_DISCORD_WEBHOOK_HERE";
+const WEBHOOK_URL = "";
 
 /* ================= DATABASE ================= */
 
 const projects = [
 
 {
-  title:"Space Adventure",
-  description:"Explore galaxies.",
-  price:"$9.99",
-  gamepass:"Required",
-  image:"img/space.jpg",
+ id:"space01",
+ title:"Space Adventure",
+ description:"Explore galaxies",
+ price:"$9.99",
+ gamepass:"Required",
+ image:"img/space.jpg",
 
-  purchased:false,
-  buyer:""
+ purchased:false,
+ buyer:""
 },
 
 {
-  title:"Racing Pro",
-  description:"Fast racing game.",
-  price:"Free",
-  gamepass:"Not Required",
-  image:"img/race.jpg",
+ id:"race01",
+ title:"Racing Pro",
+ description:"Fast racing",
+ price:"Free",
+ gamepass:"Not Required",
+ image:"img/race.jpg",
 
-  purchased:true,
-  buyer:"Max"
+ purchased:true,
+ buyer:"Max"
 },
 
 {
-  title:"Zombie World",
-  description:"Survive zombies.",
-  price:"$4.99",
-  gamepass:"Required",
-  image:"img/zombie.jpg",
+ id:"zombie01",
+ title:"Zombie World",
+ description:"Survive",
+ price:"$4.99",
+ gamepass:"Required",
+ image:"img/zombie.jpg",
 
-  purchased:false,
-  buyer:""
+ purchased:false,
+ buyer:""
 }
 
 ];
@@ -293,164 +254,161 @@ const projects = [
 /* ================= STORAGE ================= */
 
 let username = localStorage.getItem("name") || "";
-let pending = JSON.parse(localStorage.getItem("pending")) || [];
-let purchased = JSON.parse(localStorage.getItem("purchased")) || [];
+
+let pending =
+JSON.parse(localStorage.getItem("pending")||"[]");
 
 /* ================= LOGIN ================= */
 
 function login(){
 
-  const name = document.getElementById("usernameInput").value.trim();
+ const name =
+ document.getElementById("usernameInput").value.trim();
 
-  if(!name) return alert("Enter username");
+ if(!name) return alert("Enter username");
 
-  username = name;
+ username = name;
 
-  localStorage.setItem("name",name);
+ localStorage.setItem("name",name);
 
-  document.getElementById("login").style.display="none";
+ document.getElementById("login").style.display="none";
 
-  init();
+ init();
+}
+
+if(username){
+ document.getElementById("login").style.display="none";
+ init();
 }
 
 /* ================= INIT ================= */
 
 function init(){
 
-  document.getElementById("userDisplay").innerText =
-    "👤 Logged in: " + username;
+ document.getElementById("user").innerText =
+ "👤 "+username;
 
-  render(projects);
-}
-
-if(username){
-  document.getElementById("login").style.display="none";
-  init();
+ render(projects);
 }
 
 /* ================= RENDER ================= */
 
 const grid = document.getElementById("grid");
 
-let currentList = projects;
-let selected = null;
+let selectedID = null;
 
 function render(list){
 
-  grid.innerHTML="";
+ grid.innerHTML="";
 
-  list.forEach((p,i)=>{
+ list.forEach(p=>{
 
-    const card = document.createElement("div");
-    card.className="card";
+  const card = document.createElement("div");
+  card.className="card";
 
-    card.innerHTML=`
-      <img src="${p.image}">
-      <div class="card-content">
-        <h3>${p.title}</h3>
-        <p>${p.description}</p>
-      </div>
-    `;
+  card.innerHTML=`
+   <img src="${p.image}">
+   <div class="card-content">
+    <h3>${p.title}</h3>
+    <p>${p.description}</p>
+   </div>
+  `;
 
-    /* SOLD SYSTEM */
-    if(p.purchased && p.buyer !== username){
+  if(p.purchased && p.buyer !== username){
 
-      const sold = document.createElement("div");
-      sold.className="sold";
-      sold.innerText="SOLD";
-      card.appendChild(sold);
+   const sold = document.createElement("div");
+   sold.className="sold";
+   sold.innerText="SOLD";
+   card.appendChild(sold);
 
-    }else{
+  }else{
 
-      card.onclick = ()=>openModal(i);
+   card.onclick=()=>openModal(p.id);
 
-    }
+  }
 
-    grid.appendChild(card);
-
-  });
+  grid.appendChild(card);
+ });
 }
 
 /* ================= MODAL ================= */
 
-function openModal(i){
+function openModal(id){
 
-  selected = i;
+ const p = projects.find(x=>x.id===id);
 
-  const p = projects[i];
+ selectedID = id;
 
-  document.getElementById("m-img").src = p.image;
-  document.getElementById("m-title").innerText = p.title;
-  document.getElementById("m-desc").innerText = p.description;
-  document.getElementById("m-price").innerText = p.price;
-  document.getElementById("m-gamepass").innerText = p.gamepass;
+ document.getElementById("m-img").src=p.image;
+ document.getElementById("m-title").innerText=p.title;
+ document.getElementById("m-desc").innerText=p.description;
+ document.getElementById("m-price").innerText=p.price;
+ document.getElementById("m-gamepass").innerText=p.gamepass;
 
-  document.getElementById("modal").classList.add("active");
+ document.getElementById("modal").classList.add("active");
 }
 
 function closeModal(){
-  document.getElementById("modal").classList.remove("active");
+ document.getElementById("modal").classList.remove("active");
 }
 
 /* ================= PENDING ================= */
 
 function addPending(){
 
-  const p = projects[selected];
+ if(!selectedID) return;
 
-  if(pending.includes(p.title)) return;
+ if(!pending.includes(selectedID)){
 
-  pending.push(p.title);
+  pending.push(selectedID);
 
-  localStorage.setItem("pending",JSON.stringify(pending));
+  localStorage.setItem("pending",
+  JSON.stringify(pending));
 
-  sendWebhook(p.title);
+  sendWebhook(selectedID);
+ }
 
-  closeModal();
-
-  alert("Added to pending ✅");
+ closeModal();
+ alert("Added ✅");
 }
 
 /* ================= WEBHOOK ================= */
 
-function sendWebhook(product){
+function sendWebhook(id){
 
-  if(!WEBHOOK_URL) return;
+ if(!WEBHOOK_URL) return;
 
-  fetch(WEBHOOK_URL,{
-    method:"POST",
-    headers:{
-      "Content-Type":"application/json"
-    },
-    body:JSON.stringify({
-      username:"Store Bot",
-      content:`User: ${username}\nProduct: ${product}`
-    })
-  });
+ const p=projects.find(x=>x.id===id);
+
+ fetch(WEBHOOK_URL,{
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({
+   content:`User: ${username}\nProduct: ${p.title}`
+  })
+ });
 }
 
-/* ================= FILTERS ================= */
+/* ================= FILTER ================= */
 
 function showAll(){
-  render(projects);
+ render(projects);
 }
 
 function showPending(){
 
-  const list = projects.filter(p =>
-    pending.includes(p.title)
-  );
+ const list = projects.filter(p=>
+ pending.includes(p.id));
 
-  render(list);
+ render(list);
 }
 
 function showPurchased(){
 
-  const list = projects.filter(p =>
-    p.purchased && p.buyer === username
-  );
+ const list = projects.filter(p=>
+ p.purchased && p.buyer===username);
 
-  render(list);
+ render(list);
 }
 
 </script>
