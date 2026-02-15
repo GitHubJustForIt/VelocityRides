@@ -1,13 +1,4 @@
 let currentFilter = 'all';
-let selectedProductId = null;
-
-// Initialisierung
-window.onload = () => {
-    if (checkLogin()) {
-        cleanPending();
-        render();
-    }
-};
 
 function render() {
     const user = localStorage.getItem('velocityUser');
@@ -32,15 +23,15 @@ function render() {
         else if (isPending) badge = '<span class="badge badge-pending">PENDING</span>';
 
         const card = document.createElement('div');
-        card.className = 'card';
+        card.className = 'glass-card card fade-in';
         card.onclick = () => openModal(p.id);
         card.innerHTML = `
             ${badge}
             <img src="${p.image}" alt="${p.title}">
-            <div class="card-body">
+            <div class="card-content">
                 <h3>${p.title}</h3>
-                <p>${p.price}</p>
-                <div class="tags">${p.tags.map(t => `<small>#${t} </small>`).join('')}</div>
+                <span class="price-tag">${p.price}</span>
+                <p style="font-size: 0.8rem; color: var(--text-dim);">${p.description.substring(0, 50)}...</p>
             </div>
         `;
         grid.appendChild(card);
@@ -49,100 +40,44 @@ function render() {
 
 function openModal(id) {
     const p = projects.find(x => x.id === id);
-    const user = localStorage.getItem('velocityUser');
     const pendingList = JSON.parse(localStorage.getItem('velocityPending') || "[]");
     
-    selectedProductId = id;
     const modal = document.getElementById('modal');
     const details = document.getElementById('modalDetails');
-    const confirmBtn = document.getElementById('confirmBtn');
+    const actionArea = document.querySelector('.modal-action-area');
 
     details.innerHTML = `
-        <img src="${p.image}" style="width:100%; border-radius:8px;">
-        <h2>${p.title}</h2>
-        <p>${p.description}</p>
-        <p><strong>Preis:</strong> ${p.price}</p>
-        <p><strong>Gamepass:</strong> ${p.gamepass}</p>
+        <h2 style="color: var(--primary);">${p.title}</h2>
+        <p style="color: var(--text-dim); line-height: 1.6;">${p.description}</p>
+        <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px; margin: 20px 0;">
+            <p><strong>Gamepass:</strong> ${p.gamepass}</p>
+            <p><strong>Status:</strong> ${p.purchased ? 'Verkauft' : 'Verfügbar'}</p>
+        </div>
     `;
 
-    // Button Logik
     if (p.purchased || pendingList.includes(id)) {
-        confirmBtn.style.display = 'none';
-        document.getElementById('contactInput').style.display = 'none';
+        actionArea.style.display = 'none';
     } else {
-        confirmBtn.style.display = 'block';
-        document.getElementById('contactInput').style.display = 'block';
-        confirmBtn.onclick = () => addPending(p);
+        actionArea.style.display = 'block';
+        document.getElementById('confirmBtn').onclick = () => addPending(p);
     }
 
-    modal.style.display = 'block';
+    modal.style.display = 'flex';
 }
 
 function closeModal() {
     document.getElementById('modal').style.display = 'none';
 }
 
-function addPending(product) {
-    const contact = document.getElementById('contactInput').value;
-    const user = localStorage.getItem('velocityUser');
-
-    if (!contact) {
-        alert("Bitte gib eine Kontaktmöglichkeit an!");
-        return;
-    }
-
-    let pendingList = JSON.parse(localStorage.getItem('velocityPending') || "[]");
-    pendingList.push(product.id);
-    localStorage.setItem('velocityPending', JSON.stringify(pendingList));
-
-    sendWebhook(product, user, contact);
-    closeModal();
-    render();
-}
-
-async function sendWebhook(product, user, contact) {
-    if (!WEBHOOK_URL || WEBHOOK_URL === "DEINE_DISCORD_WEBHOOK_URL_HIER") return;
-
-    const payload = {
-        embeds: [{
-            title: "🆕 Neue Pending-Anfrage",
-            color: 15844367,
-            fields: [
-                { name: "Produkt", value: product.title, inline: true },
-                { name: "User", value: user, inline: true },
-                { name: "Kontakt", value: contact }
-            ],
-            timestamp: new Date()
-        }]
-    };
-
-    try {
-        await fetch(WEBHOOK_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
-    } catch (e) { console.error("Webhook Error", e); }
-}
-
-function cleanPending() {
-    let pendingList = JSON.parse(localStorage.getItem('velocityPending') || "[]");
-    // Entferne IDs, die in der Datenbank als verkauft markiert sind
-    pendingList = pendingList.filter(id => {
-        const p = projects.find(x => x.id === id);
-        return p && !p.purchased;
-    });
-    localStorage.setItem('velocityPending', JSON.stringify(pendingList));
-}
-
 // Filter Navigation
-function showAll() { updateFilter('all', 'btn-all'); }
-function showPending() { updateFilter('pending', 'btn-pending'); }
-function showPurchased() { updateFilter('purchased', 'btn-purchased'); }
-
 function updateFilter(filter, btnId) {
     currentFilter = filter;
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     document.getElementById(btnId).classList.add('active');
     render();
 }
+
+// Hilfsfunktionen für Filter (aus index.html aufgerufen)
+function showAll() { updateFilter('all', 'btn-all'); }
+function showPending() { updateFilter('pending', 'btn-pending'); }
+function showPurchased() { updateFilter('purchased', 'btn-purchased'); }
