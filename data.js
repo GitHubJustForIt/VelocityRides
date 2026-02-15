@@ -3,27 +3,38 @@ const WEBHOOK_URL = "https://discordapp.com/api/webhooks/1472624952917364998/dLU
 
 // Initial Projects Data
 // ID ist wichtig für die Identifikation
-const initialProjects = [
+const projects = [
     {
         id: 1,
-        title: "Neon City Hub",
-        description: "Ein futuristischer Cyberpunk-Spawn mit Neon-Effekten und optimierter Performance.",
-        price: "$19.99",
-        gamepass: "Lobby Pass",
-        image: "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
-        tags: ["Cyberpunk", "Spawn", "Neon"],
+        title: "Neon City Drift",
+        description: "High speed racing template with neon aesthetics.",
+        price: "$14.99",
+        gamepass: "Required: Speed Pass v2",
+        image: "https://via.placeholder.com/300x180/1a1a1a/ffffff?text=Neon+City",
         purchased: false,
-        buyer: null
+        buyer: "",
+        tags: ["Racing", "Neon"]
     },
     {
         id: 2,
-        title: "Medieval Kingdom",
-        description: "Großes Schloss-Template mit Marktplatz und detaillierten Texturen.",
+        title: "Medieval Fortress",
+        description: "Complete castle asset with interior rooms.",
         price: "$24.99",
-        gamepass: "Kingdom Member",
-        image: "https://images.unsplash.com/photo-1599423300746-b62533397364?auto=format&fit=crop&w=800&q=80",
-        tags: ["Medieval", "Large", "Castle"],
+        gamepass: "Not Required",
+        image: "https://via.placeholder.com/300x180/1a1a1a/ffffff?text=Medieval",
         purchased: true,
-        buyer: "ShadowNinja"
+        buyer: "OldUser123",
+        tags: ["Building", "RP"]
+    },
+    {
+        id: 3,
+        title: "Cyberpunk Apartment",
+        description: "Modern interior for futuristic roleplay.",
+        price: "$19.99",
+        gamepass: "Required: VIP Member",
+        image: "https://via.placeholder.com/300x180/1a1a1a/ffffff?text=Cyberpunk",
+        purchased: false,
+        buyer: "",
+        tags: ["Interior", "Cyberpunk"]
     }
 ];
