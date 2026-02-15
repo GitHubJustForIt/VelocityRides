@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Velocity Rides | Premium Dashboard</title>
+    <title>Velocity Rides | Premium Assets</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
@@ -11,91 +11,76 @@
 <body>
 
     <div id="login-container">
-        <div class="login-box fade-in">
-            <div class="login-logo"><i class="fas fa-rocket"></i></div>
+        <div class="login-box animate-in">
+            <div class="login-icon"><i class="fas fa-bolt"></i></div>
             <h1>Velocity Rides</h1>
-            <p>Admin & Shop Dashboard</p>
-            <div class="input-group">
-                <input type="text" id="username-input" placeholder=" " autocomplete="off">
-                <label>Username</label>
+            <p>Authentication Required</p>
+            <div class="input-field">
+                <input type="text" id="username-input" placeholder="Username..." autocomplete="off">
             </div>
-            <button id="login-btn">Enter Dashboard <i class="fas fa-arrow-right"></i></button>
+            <button id="login-btn">Dashboard betreten</button>
         </div>
     </div>
 
     <div id="app" class="hidden">
-        
         <nav class="navbar">
-            <div class="nav-brand"><i class="fas fa-rocket"></i> VRides</div>
+            <div class="nav-logo">VELOCITY<span>RIDES</span></div>
             <div class="nav-user">
-                <span>Welcome, <b id="display-username">User</b></span>
-                <button id="logout-btn" title="Logout"><i class="fas fa-power-off"></i></button>
+                <span id="display-username">User</span>
+                <button id="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
             </div>
         </nav>
 
-        <header class="hero-section">
-            <h1 class="hero-title">Velocity Rides</h1>
-            <p class="hero-subtitle">Premium Assets & Development Templates</p>
-            <div class="hero-stats">
-                <span><i class="fas fa-check-circle"></i> Verified</span>
-                <span><i class="fas fa-bolt"></i> Instant Delivery</span>
-                <span><i class="fas fa-shield-alt"></i> Secure</span>
-            </div>
+        <header class="hero">
+            <h1 class="hero-title animate-pop">Velocity Rides</h1>
+            <p class="hero-subtitle">High-End Templates & Digital Assets für Entwickler</p>
+            <div class="hero-divider"></div>
         </header>
 
-        <section class="steps-wrapper">
-            <div class="steps-container">
-                <div class="step">
-                    <div class="icon-box"><i class="fas fa-mouse-pointer"></i></div>
-                    <p>Select</p>
-                </div>
-                <div class="line"></div>
-                <div class="step">
-                    <div class="icon-box"><i class="fas fa-hourglass-half"></i></div>
-                    <p>Pending</p>
-                </div>
-                <div class="line"></div>
-                <div class="step">
-                    <div class="icon-box"><i class="fas fa-tools"></i></div>
-                    <p>Build</p>
-                </div>
-                <div class="line"></div>
-                <div class="step">
-                    <div class="icon-box success"><i class="fas fa-star"></i></div>
-                    <p>Owned</p>
-                </div>
+        <div class="steps-section">
+            <div class="step-card">
+                <i class="fas fa-search"></i>
+                <p>Template wählen</p>
             </div>
-        </section>
-
-        <div class="filter-container">
-            <button class="filter-btn active" onclick="filterProjects('all')">All Templates</button>
-            <button class="filter-btn" onclick="filterProjects('pending')">Pending</button>
-            <button class="filter-btn" onclick="filterProjects('purchased')">My Library</button>
+            <i class="fas fa-chevron-right step-arrow"></i>
+            <div class="step-card">
+                <i class="fas fa-clock"></i>
+                <p>Pending setzen</p>
+            </div>
+            <i class="fas fa-chevron-right step-arrow"></i>
+            <div class="step-card">
+                <i class="fas fa-headset"></i>
+                <p>Team Kontakt</p>
+            </div>
+            <i class="fas fa-chevron-right step-arrow"></i>
+            <div class="step-card success">
+                <i class="fas fa-check-double"></i>
+                <p>Owned</p>
+            </div>
         </div>
 
-        <main id="projects-grid">
-            </main>
+        <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterProjects('all')">Alle Produkte</button>
+            <button class="filter-btn" onclick="filterProjects('pending')">Meine Anfragen</button>
+            <button class="filter-btn" onclick="filterProjects('purchased')">Besitzt</button>
+        </div>
 
-        <footer class="main-footer">
-            <div class="footer-content">
-                <div class="footer-col">
-                    <h4>Velocity Rides</h4>
-                    <p>Providing high-quality digital assets for developers since 2024.</p>
+        <main id="projects-grid"></main>
+
+        <footer class="footer">
+            <div class="footer-grid">
+                <div>
+                    <h3>Velocity Rides</h3>
+                    <p>Qualität und Performance für deine Projekte.</p>
                 </div>
-                <div class="footer-col">
-                    <h4>Legal</h4>
-                    <a href="#">Terms of Service</a>
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Copyright Information</a>
-                </div>
-                <div class="footer-col">
-                    <h4>Contact</h4>
-                    <a href="#">Support Discord</a>
-                    <a href="#">Twitter / X</a>
+                <div>
+                    <h3>Links</h3>
+                    <a href="#">Support</a> | <a href="#">Discord</a> | <a href="#">Lizenzen</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                &copy; 2026 Velocity Rides Development. All rights reserved. Unauthorized redistribution is prohibited.
+                &copy; 2026 Velocity Rides Development. Alle Rechte vorbehalten. 
+                <br><span>Urheberrechtlich geschütztes Material.</span>
             </div>
         </footer>
     </div>
@@ -104,26 +89,21 @@
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             <div class="modal-split">
-                <div class="modal-image-col">
-                    <img id="modal-img" src="" alt="Product">
-                </div>
-                <div class="modal-info-col">
-                    <h2 id="modal-title">Title</h2>
-                    <div class="price-tag" id="modal-price">$0.00</div>
-                    <p id="modal-desc">Description...</p>
+                <div class="modal-left" id="modal-img-bg"></div>
+                <div class="modal-right">
+                    <h2 id="modal-title">Titel</h2>
+                    <div id="modal-price" class="price-tag"></div>
+                    <p id="modal-desc"></p>
                     
-                    <div class="specs-box">
-                        <div><i class="fas fa-gamepad"></i> <span id="modal-gamepass"></span></div>
+                    <div class="info-box">
+                        <p><i class="fas fa-ticket-alt"></i> <strong>Gamepass:</strong> <span id="modal-gamepass"></span></p>
+                        <div id="modal-tags" class="tags"></div>
                     </div>
-                    <div id="modal-tags" class="tags-row"></div>
 
                     <div id="modal-action-area">
-                        <hr>
-                        <label>Discord / Contact Info</label>
-                        <input type="text" id="contact-input" placeholder="username#0000">
-                        <button id="confirm-pending-btn" class="glow-btn">
-                            Request Purchase <i class="fas fa-arrow-right"></i>
-                        </button>
+                        <label>Dein Kontakt (Discord/Socials)</label>
+                        <input type="text" id="contact-input" placeholder="z.B. User#1234">
+                        <button id="confirm-pending-btn" class="btn-primary">Pending anfragen</button>
                     </div>
                     <div id="modal-status-msg" class="hidden"></div>
                 </div>
