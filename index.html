@@ -1,69 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Velocity Rides</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velocity Rides Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- LOGIN -->
-<div id="loginBox">
-  <div class="login-card">
-    <h2><i class="fa-solid fa-user-lock"></i> Login</h2>
-    <input id="usernameInput" placeholder="Username">
-    <button id="loginBtn"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
-  </div>
-</div>
+    <div id="login-container">
+        <div class="login-box">
+            <h1>Velocity Rides</h1>
+            <p>Admin & Shop Dashboard</p>
+            <input type="text" id="username-input" placeholder="Dein Username..." autocomplete="off">
+            <button id="login-btn">Login <i class="fas fa-sign-in-alt"></i></button>
+        </div>
+    </div>
 
-<!-- APP -->
-<div id="app" style="display:none">
-  <header>
-    <h1><i class="fa-solid fa-rocket"></i> Velocity Rides</h1>
-    <p id="userDisplay"></p>
-    <nav>
-      <button class="nav-btn" onclick="showAll()"><i class="fa-solid fa-layer-group"></i> All</button>
-      <button class="nav-btn" onclick="showPending()"><i class="fa-solid fa-clock"></i> Pending</button>
-      <button class="nav-btn" onclick="showPurchased()"><i class="fa-solid fa-check"></i> Purchased</button>
-    </nav>
-  </header>
+    <div id="app" class="hidden">
+        
+        <header>
+            <div class="logo">
+                <i class="fas fa-rocket"></i> Velocity Rides
+            </div>
+            <div class="user-info">
+                Hallo, <span id="display-username">User</span>
+                <button id="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </header>
 
-  <!-- Steps -->
-  <div id="steps">
-    <div class="step"><i class="fa-solid fa-hand-pointer"></i> 1. Set to Pending</div>
-    <div class="step"><i class="fa-solid fa-circle-check"></i> 2. Purchased with Success</div>
-    <div class="step"><i class="fa-solid fa-clock"></i> 3. Waiting for our team to contact you</div>
-    <div class="step"><i class="fa-solid fa-wrench"></i> 4. Our team builds it</div>
-  </div>
+        <section class="steps-container">
+            <div class="step">
+                <div class="icon"><i class="fas fa-hourglass-half"></i></div>
+                <p>1. Set to Pending</p>
+            </div>
+            <div class="line"></div>
+            <div class="step">
+                <div class="icon"><i class="fas fa-check-circle"></i></div>
+                <p>2. Waiting for Team</p>
+            </div>
+            <div class="line"></div>
+            <div class="step">
+                <div class="icon"><i class="fas fa-cogs"></i></div>
+                <p>3. Team builds Product</p>
+            </div>
+            <div class="line"></div>
+            <div class="step">
+                <div class="icon"><i class="fas fa-file-download"></i></div>
+                <p>4. Success / Owned</p>
+            </div>
+        </section>
 
-  <main id="grid"></main>
-</div>
+        <section class="filters">
+            <button class="filter-btn active" onclick="filterProjects('all')">All Products</button>
+            <button class="filter-btn" onclick="filterProjects('pending')">My Pending</button>
+            <button class="filter-btn" onclick="filterProjects('purchased')">My Owned</button>
+        </section>
 
-<!-- MODAL -->
-<div id="modal">
-  <div class="modal-box">
-    <img id="m-img">
-    <h2 id="m-title"></h2>
-    <p id="m-desc"></p>
-    <p><i class="fa-solid fa-dollar-sign"></i> Price: <b id="m-price"></b></p>
-    <p><i class="fa-solid fa-ticket"></i> Gamepass: <b id="m-gamepass"></b></p>
-    <p id="m-tags"></p>
-    <p>Confirm Username + Contact:</p>
-    <input id="confirmUser" placeholder="Your Username">
-    <input id="contactInfo" placeholder="Contact (TikTok)">
-    <button class="btn" onclick="addPending()"><i class="fa-solid fa-cart-plus"></i> Confirm Pending</button>
-    <button class="btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i> Close</button>
-  </div>
-</div>
+        <main id="projects-grid">
+            </main>
 
-<footer>
-  © VelocityRides 2026 • All Rights Reserved. Products are copyright protected.
-</footer>
+        <footer>
+            &copy; 2026 Velocity Rides. All Rights Reserved.
+        </footer>
+    </div>
 
-<script src="data.js"></script>
-<script src="login.js"></script>
-<script src="app.js"></script>
+    <div id="product-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+                <img id="modal-img" src="" alt="Product Image">
+                <div class="modal-details">
+                    <h2 id="modal-title">Title</h2>
+                    <span id="modal-price" class="badge-price">$0.00</span>
+                    <p id="modal-desc">Description goes here...</p>
+                    
+                    <div class="modal-info-box">
+                        <p><i class="fas fa-gamepad"></i> <strong>Gamepass:</strong> <span id="modal-gamepass">-</span></p>
+                        <div id="modal-tags" class="tags-container"></div>
+                    </div>
+
+                    <hr>
+
+                    <div id="modal-action-area">
+                        <h3>Confirm Purchase Request</h3>
+                        <label>Dein Kontakt (Discord/TikTok):</label>
+                        <input type="text" id="contact-input" placeholder="z.B. User#1234">
+                        <button id="confirm-pending-btn" class="action-btn">
+                            Confirm Pending <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div id="modal-status-msg" class="hidden"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="login.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
