@@ -13,7 +13,7 @@ const templates = [
         id: '1',
         title: 'Boomerang',
         description: 'A family-friendly ride with a unqiue layout.',
-        price: 80.000,
+        price: 80000,
         gamepass: 'Non-Collision (optional), Ride Operation (optional)',
         image: '',
         purchased: false,      // true = verkauft, false = verfügbar
