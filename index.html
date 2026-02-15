@@ -1,164 +1,166 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mein Portfolio</title>
+
+<title>My Products</title>
 
 <style>
 
+/* =========================
+   THEME
+========================= */
+
 :root {
-    --bg: #0f1117;
-    --card: #181b24;
-    --accent: #6c8cff;
-    --text: #ffffff;
-    --sub: #aaaaaa;
+  --bg: #0d0f14;
+  --card: #171a22;
+  --accent: #5f7cff;
+  --text: #ffffff;
+  --muted: #9aa0aa;
 }
 
 * {
-    box-sizing: border-box;
-    font-family: "Segoe UI", sans-serif;
+  box-sizing: border-box;
+  font-family: "Segoe UI", system-ui, sans-serif;
 }
+
+/* =========================
+   BODY
+========================= */
 
 body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
 }
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 
 header {
-    padding: 30px;
-    text-align: center;
-    border-bottom: 1px solid #222;
+  padding: 40px 20px;
+  text-align: center;
+  border-bottom: 1px solid #222;
 }
 
 header h1 {
-    font-size: 2.2rem;
+  font-size: 2.4rem;
 }
 
 header p {
-    color: var(--sub);
+  color: var(--muted);
 }
 
-/* BUTTON */
-
-.btn {
-    background: var(--accent);
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.btn:hover {
-    opacity: 0.8;
-}
-
-/* GRID */
+/* =========================
+   GRID
+========================= */
 
 #grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
-    padding: 40px;
+  padding: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
 }
 
-/* CARD */
+/* =========================
+   CARD
+========================= */
 
 .card {
-    background: var(--card);
-    border-radius: 15px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: 0.3s;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  background: var(--card);
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: .25s;
+  box-shadow: 0 10px 25px rgba(0,0,0,.4);
 }
 
 .card:hover {
-    transform: translateY(-6px);
+  transform: translateY(-6px);
 }
 
 .card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
 }
 
-.card .content {
-    padding: 20px;
+.card-content {
+  padding: 18px;
 }
 
 .card h3 {
-    margin: 0;
+  margin: 0 0 6px;
 }
 
 .card p {
-    color: var(--sub);
-    font-size: 0.9rem;
+  font-size: .9rem;
+  color: var(--muted);
 }
 
-/* MODAL */
+/* =========================
+   MODAL
+========================= */
 
-.modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.85);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
+#modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
 }
 
-.modal.active {
-    display: flex;
+#modal.active {
+  display: flex;
 }
 
 .modal-box {
-    background: var(--card);
-    width: 90%;
-    max-width: 500px;
-    padding: 25px;
-    border-radius: 15px;
+  background: var(--card);
+  padding: 25px;
+  width: 90%;
+  max-width: 480px;
+  border-radius: 14px;
 }
 
-.modal-box h2 {
-    text-align: center;
+/* =========================
+   DETAILS
+========================= */
+
+.modal-box img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
 }
 
-/* FORM */
-
-input, textarea {
-    width: 100%;
-    background: #0f1219;
-    border: 1px solid #333;
-    color: white;
-    padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 15px;
+.info {
+  margin: 12px 0;
 }
 
-textarea {
-    resize: none;
-    height: 90px;
+.badge {
+  display: inline-block;
+  background: var(--accent);
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: .8rem;
 }
 
-.actions {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
+.close {
+  margin-top: 15px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: #222;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-/* DETAIL VIEW */
-
-#detail img {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 15px;
+.close:hover {
+  background: #333;
 }
 
 </style>
@@ -167,237 +169,127 @@ textarea {
 <body>
 
 <header>
-    <h1>🌌 Mein Portfolio</h1>
-    <p>Produkte • Projekte • Designs</p>
-    <button class="btn" onclick="openAdd()">+ Projekt hinzufügen</button>
+  <h1>🎮 My Products</h1>
+  <p>Games • Digital Products • Projects</p>
 </header>
 
 <main id="grid"></main>
 
-<!-- ADD / EDIT MODAL -->
-<div class="modal" id="editor">
+<!-- MODAL -->
+<div id="modal">
 
-    <div class="modal-box">
+  <div class="modal-box">
 
-        <h2>Projekt bearbeiten</h2>
+    <img id="m-img">
 
-        <input type="text" id="title" placeholder="Titel">
+    <h2 id="m-title"></h2>
 
-        <textarea id="desc" placeholder="Beschreibung"></textarea>
+    <p id="m-desc"></p>
 
-        <input type="file" id="image" accept="image/*">
-
-        <div class="actions">
-            <button class="btn" onclick="save()">Speichern</button>
-            <button class="btn" onclick="closeModal()">Abbrechen</button>
-        </div>
-
+    <div class="info">
+      💲 Price: <strong id="m-price"></strong>
     </div>
 
-</div>
-
-<!-- DETAIL MODAL -->
-<div class="modal" id="detail">
-
-    <div class="modal-box">
-
-        <img id="detailImg">
-
-        <h2 id="detailTitle"></h2>
-
-        <p id="detailDesc"></p>
-
-        <div class="actions">
-
-            <button class="btn" onclick="edit()">Bearbeiten</button>
-
-            <button class="btn" onclick="remove()">Löschen</button>
-
-            <button class="btn" onclick="closeDetail()">Schließen</button>
-
-        </div>
-
+    <div class="info">
+      🎫 Gamepass: <span class="badge" id="m-gamepass"></span>
     </div>
+
+    <button class="close" onclick="closeModal()">Close</button>
+
+  </div>
 
 </div>
 
 <script>
 
-let projects = JSON.parse(localStorage.getItem("projects")) || [];
+/* =========================
+   PROJECT DATABASE
+   (EDIT ONLY THIS PART)
+========================= */
 
-let current = null;
-let currentEdit = null;
+const projects = [
 
-/* RENDER */
+  {
+    title: "Space Adventure",
+    description: "Explore the universe and discover new planets.",
+    price: "$14.99",
+    gamepass: "Required",
+    image: "img/space.jpg"
+  },
 
-function render() {
+  {
+    title: "Racing Pro",
+    description: "High-speed competitive racing game.",
+    price: "Free",
+    gamepass: "Not Required",
+    image: "img/race.jpg"
+  },
 
-    const grid = document.getElementById("grid");
-    grid.innerHTML = "";
+  {
+    title: "Zombie Survival",
+    description: "Survive waves of zombies in an open world.",
+    price: "$9.99",
+    gamepass: "Required",
+    image: "img/zombie.jpg"
+  }
 
-    projects.forEach((p, i) => {
+];
 
-        const card = document.createElement("div");
-        card.className = "card";
+/* =========================
+   RENDER SYSTEM
+========================= */
 
-        card.innerHTML = `
-            <img src="${p.img}">
-            <div class="content">
-                <h3>${p.title}</h3>
-                <p>${p.desc}</p>
-            </div>
-        `;
+const grid = document.getElementById("grid");
 
-        card.onclick = () => openDetail(i);
+function renderProjects() {
 
-        grid.appendChild(card);
+  grid.innerHTML = "";
 
-    });
+  projects.forEach((project, index) => {
 
-}
+    const card = document.createElement("div");
+    card.className = "card";
 
-render();
+    card.innerHTML = `
+      <img src="${project.image}">
+      <div class="card-content">
+        <h3>${project.title}</h3>
+        <p>${project.description}</p>
+      </div>
+    `;
 
-/* ADD */
+    card.onclick = () => openModal(index);
 
-function openAdd() {
+    grid.appendChild(card);
 
-    currentEdit = null;
-
-    document.getElementById("title").value = "";
-    document.getElementById("desc").value = "";
-    document.getElementById("image").value = "";
-
-    document.getElementById("editor").classList.add("active");
-}
-
-/* SAVE */
-
-function save() {
-
-    const title = titleInput().value;
-    const desc = descInput().value;
-    const file = imageInput().files[0];
-
-    if (!title || !desc) return alert("Bitte alles ausfüllen!");
-
-    if (file) {
-
-        const reader = new FileReader();
-
-        reader.onload = e => {
-
-            store(title, desc, e.target.result);
-
-        };
-
-        reader.readAsDataURL(file);
-
-    } else {
-
-        if (currentEdit === null) {
-            alert("Bitte Bild wählen!");
-            return;
-        }
-
-        store(title, desc, projects[currentEdit].img);
-
-    }
+  });
 
 }
 
-function store(title, desc, img) {
+renderProjects();
 
-    const obj = { title, desc, img };
+/* =========================
+   MODAL SYSTEM
+========================= */
 
-    if (currentEdit === null) {
+function openModal(i) {
 
-        projects.push(obj);
+  const p = projects[i];
 
-    } else {
+  document.getElementById("m-img").src = p.image;
+  document.getElementById("m-title").textContent = p.title;
+  document.getElementById("m-desc").textContent = p.description;
+  document.getElementById("m-price").textContent = p.price;
+  document.getElementById("m-gamepass").textContent = p.gamepass;
 
-        projects[currentEdit] = obj;
-
-    }
-
-    localStorage.setItem("projects", JSON.stringify(projects));
-
-    closeModal();
-    render();
-
+  document.getElementById("modal").classList.add("active");
 }
-
-/* DETAIL */
-
-function openDetail(i) {
-
-    current = i;
-
-    const p = projects[i];
-
-    document.getElementById("detailImg").src = p.img;
-    document.getElementById("detailTitle").innerText = p.title;
-    document.getElementById("detailDesc").innerText = p.desc;
-
-    document.getElementById("detail").classList.add("active");
-}
-
-function closeDetail() {
-    document.getElementById("detail").classList.remove("active");
-}
-
-/* EDIT */
-
-function edit() {
-
-    closeDetail();
-
-    const p = projects[current];
-
-    currentEdit = current;
-
-    titleInput().value = p.title;
-    descInput().value = p.desc;
-
-    document.getElementById("editor").classList.add("active");
-}
-
-/* DELETE */
-
-function remove() {
-
-    if (!confirm("Wirklich löschen?")) return;
-
-    projects.splice(current, 1);
-
-    localStorage.setItem("projects", JSON.stringify(projects));
-
-    closeDetail();
-    render();
-}
-
-/* CLOSE */
 
 function closeModal() {
-    document.getElementById("editor").classList.remove("active");
-}
-
-/* HELPERS */
-
-function titleInput() {
-    return document.getElementById("title");
-}
-
-function descInput() {
-    return document.getElementById("desc");
-}
-
-function imageInput() {
-    return document.getElementById("image");
+  document.getElementById("modal").classList.remove("active");
 }
 
 </script>
 
 </body>
 </html>
-
