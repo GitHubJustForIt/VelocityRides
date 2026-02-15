@@ -16,8 +16,8 @@ const templates = [
         price: 80000,
         gamepass: 'Non-Collision (optional), Ride Operation (optional)',
         image: '',
-        purchased: false,      // true = verkauft, false = verfügbar
-        buyer: null,           // Username des Käufers (wenn verkauft)
+        purchased: true,      // true = verkauft, false = verfügbar
+        buyer: 'BananaToGoApfel1',           // Username des Käufers (wenn verkauft)
         tags: ['Family', 'Attraction', 'Boomerang']
     }
 ];
