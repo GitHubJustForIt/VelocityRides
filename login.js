@@ -6,13 +6,9 @@ const app = document.getElementById("app");
 let username = localStorage.getItem("user") || "";
 let pending = JSON.parse(localStorage.getItem("pending")) || [];
 
-// Login Button
 loginBtn.addEventListener("click", login);
 
-// Auto-login
-if(username){
-  startApp();
-}
+if(username) startApp();
 
 function login(){
   const name = usernameInput.value.trim();
@@ -25,5 +21,5 @@ function login(){
 function startApp(){
   loginBox.style.display = "none";
   app.style.display = "block";
-  initApp();  // Aufruf App
+  initApp();
 }
