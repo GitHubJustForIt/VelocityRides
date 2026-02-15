@@ -1,39 +1,162 @@
-function handleLogin() {
-    const username = document.getElementById('usernameInput').value.trim();
+// ============================================
+// VELOCITY RIDES - LOGIN LOGIC
+// ============================================
+
+// LocalStorage Keys
+const STORAGE_KEYS = {
+    USER: 'velocity_rides_user',
+    PENDING: 'velocity_rides_pending'
+};
+
+// ============================================
+// LocalStorage Helper Functions
+// ============================================
+
+// User Management
+function getUser() {
+    const data = localStorage.getItem(STORAGE_KEYS.USER);
+    return data ? JSON.parse(data) : null;
+}
+
+function setUser(username) {
+    localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify({ username }));
+}
+
+function clearUser() {
+    localStorage.removeItem(STORAGE_KEYS.USER);
+}
+
+// Pending Purchases Management
+function getPendingPurchases() {
+    const data = localStorage.getItem(STORAGE_KEYS.PENDING);
+    return data ? JSON.parse(data) : [];
+}
+
+function addPendingPurchase(templateId, username, contact) {
+    const pending = getPendingPurchases();
+    pending.push({
+        templateId,
+        username,
+        contact,
+        timestamp: Date.now()
+    });
+    localStorage.setItem(STORAGE_KEYS.PENDING, JSON.stringify(pending));
+}
+
+function isPending(templateId, username) {
+    const pending = getPendingPurchases();
+    return pending.some(p => p.templateId === templateId && p.username === username);
+}
+
+function getUserPendingPurchases(username) {
+    const pending = getPendingPurchases();
+    return pending.filter(p => p.username === username);
+}
+
+function removePendingPurchase(templateId) {
+    const pending = getPendingPurchases();
+    const filtered = pending.filter(p => p.templateId !== templateId);
+    localStorage.setItem(STORAGE_KEYS.PENDING, JSON.stringify(filtered));
+}
+
+// ============================================
+// Login/Logout Logic
+// ============================================
+
+// Check if user is already logged in
+function checkLogin() {
+    const user = getUser();
+    if (user && user.username) {
+        showDashboard(user.username);
+        return true;
+    }
+    showLogin();
+    return false;
+}
+
+// Show login screen
+function showLogin() {
+    document.getElementById('login-screen').classList.add('active');
+    document.getElementById('dashboard-screen').classList.remove('active');
+}
+
+// Show dashboard
+function showDashboard(username) {
+    document.getElementById('login-screen').classList.remove('active');
+    document.getElementById('dashboard-screen').classList.add('active');
+    document.getElementById('logged-user').textContent = username;
     
-    if (username.length < 3) {
-        const input = document.getElementById('usernameInput');
-        input.style.borderColor = 'var(--accent)';
-        setTimeout(() => input.style.borderColor = 'rgba(255,255,255,0.1)', 2000);
+    // Initialize dashboard wenn app.js geladen ist
+    if (typeof initDashboard === 'function') {
+        initDashboard(username);
+    }
+}
+
+// Handle login form submission
+function handleLogin(event) {
+    event.preventDefault();
+    
+    const usernameInput = document.getElementById('username');
+    const username = usernameInput.value.trim();
+    
+    if (!username) {
+        showToast('Please enter a username', 'error');
         return;
     }
-
-    localStorage.setItem('velocityUser', username);
-    initApp(); // Diese Funktion schaltet die Ansicht um
+    
+    // Save user
+    setUser(username);
+    
+    // Show dashboard
+    showDashboard(username);
+    
+    // Show welcome toast
+    showToast(`Welcome, ${username}!`, 'success');
 }
 
-function initApp() {
-    const user = localStorage.getItem('velocityUser');
-    if (user) {
-        document.getElementById('loginBox').style.display = 'none';
-        document.getElementById('app').style.display = 'block';
-        document.getElementById('displayUser').innerText = user;
-        
-        // App Logik aus app.js starten
-        if (typeof cleanPending === "function") cleanPending();
-        if (typeof render === "function") render();
-    }
-}
-
+// Handle logout
 function handleLogout() {
-    localStorage.removeItem('velocityUser');
-    localStorage.removeItem('velocityPending');
-    location.reload();
+    clearUser();
+    showLogin();
+    showToast('Logged out successfully', 'info');
 }
 
-// Beim Laden der Seite prüfen
-window.addEventListener('DOMContentLoaded', () => {
-    if (localStorage.getItem('velocityUser')) {
-        initApp();
+// ============================================
+// Event Listeners - Wait for DOM
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Login form
+    const loginForm = document.getElementById('login-form');
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
     }
+    
+    // Logout button
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', handleLogout);
+    }
+    
+    // Check if user is already logged in
+    checkLogin();
 });
+
+// ============================================
+// Toast Notification Function
+// ============================================
+
+function showToast(message, type = 'info') {
+    const toast = document.getElementById('toast');
+    
+    // Set message
+    toast.textContent = message;
+    
+    // Set type class
+    toast.className = 'toast show toast-' + type;
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000);
+}
