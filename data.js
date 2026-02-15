@@ -12,7 +12,7 @@ const initialProjects = [
         gamepass: "Non-Collision (optional), Ride-Operation (optional)",
         image: "https://via.placeholder.com/400x200/1e1e2e/ffffff?text=Space+Adventure", // Platzhalter
         tags: ["family-friendly", "boomerang", "themed"],
-        purchased: true, // Standardmäßig verfügbar
-        buyer: lol
+        purchased: false, // Standardmäßig verfügbar
+        buyer: null
     },
 ];
