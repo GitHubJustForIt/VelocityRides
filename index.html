@@ -1,16 +1,403 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
-  <title>VelocityRides</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mein Portfolio</title>
+
+<style>
+
+:root {
+    --bg: #0f1117;
+    --card: #181b24;
+    --accent: #6c8cff;
+    --text: #ffffff;
+    --sub: #aaaaaa;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* HEADER */
+
+header {
+    padding: 30px;
+    text-align: center;
+    border-bottom: 1px solid #222;
+}
+
+header h1 {
+    font-size: 2.2rem;
+}
+
+header p {
+    color: var(--sub);
+}
+
+/* BUTTON */
+
+.btn {
+    background: var(--accent);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+/* GRID */
+
+#grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 40px;
+}
+
+/* CARD */
+
+.card {
+    background: var(--card);
+    border-radius: 15px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+.card:hover {
+    transform: translateY(-6px);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card .content {
+    padding: 20px;
+}
+
+.card h3 {
+    margin: 0;
+}
+
+.card p {
+    color: var(--sub);
+    font-size: 0.9rem;
+}
+
+/* MODAL */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-box {
+    background: var(--card);
+    width: 90%;
+    max-width: 500px;
+    padding: 25px;
+    border-radius: 15px;
+}
+
+.modal-box h2 {
+    text-align: center;
+}
+
+/* FORM */
+
+input, textarea {
+    width: 100%;
+    background: #0f1219;
+    border: 1px solid #333;
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+textarea {
+    resize: none;
+    height: 90px;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+/* DETAIL VIEW */
+
+#detail img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+</style>
 </head>
+
 <body>
-  <h1>🎢 VelocityRides</h1>
-  <p>Welcome to our coaster company!</p>
 
-  <h2>About Us</h2>
-  <p>We build amazing coaster models for TPT2 parks.</p>
+<header>
+    <h1>🌌 Mein Portfolio</h1>
+    <p>Produkte • Projekte • Designs</p>
+    <button class="btn" onclick="openAdd()">+ Projekt hinzufügen</button>
+</header>
 
-  <h2>Contact</h2>
-  <p>Email: velocityrides@email</p>
+<main id="grid"></main>
+
+<!-- ADD / EDIT MODAL -->
+<div class="modal" id="editor">
+
+    <div class="modal-box">
+
+        <h2>Projekt bearbeiten</h2>
+
+        <input type="text" id="title" placeholder="Titel">
+
+        <textarea id="desc" placeholder="Beschreibung"></textarea>
+
+        <input type="file" id="image" accept="image/*">
+
+        <div class="actions">
+            <button class="btn" onclick="save()">Speichern</button>
+            <button class="btn" onclick="closeModal()">Abbrechen</button>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal" id="detail">
+
+    <div class="modal-box">
+
+        <img id="detailImg">
+
+        <h2 id="detailTitle"></h2>
+
+        <p id="detailDesc"></p>
+
+        <div class="actions">
+
+            <button class="btn" onclick="edit()">Bearbeiten</button>
+
+            <button class="btn" onclick="remove()">Löschen</button>
+
+            <button class="btn" onclick="closeDetail()">Schließen</button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let projects = JSON.parse(localStorage.getItem("projects")) || [];
+
+let current = null;
+let currentEdit = null;
+
+/* RENDER */
+
+function render() {
+
+    const grid = document.getElementById("grid");
+    grid.innerHTML = "";
+
+    projects.forEach((p, i) => {
+
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <img src="${p.img}">
+            <div class="content">
+                <h3>${p.title}</h3>
+                <p>${p.desc}</p>
+            </div>
+        `;
+
+        card.onclick = () => openDetail(i);
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+render();
+
+/* ADD */
+
+function openAdd() {
+
+    currentEdit = null;
+
+    document.getElementById("title").value = "";
+    document.getElementById("desc").value = "";
+    document.getElementById("image").value = "";
+
+    document.getElementById("editor").classList.add("active");
+}
+
+/* SAVE */
+
+function save() {
+
+    const title = titleInput().value;
+    const desc = descInput().value;
+    const file = imageInput().files[0];
+
+    if (!title || !desc) return alert("Bitte alles ausfüllen!");
+
+    if (file) {
+
+        const reader = new FileReader();
+
+        reader.onload = e => {
+
+            store(title, desc, e.target.result);
+
+        };
+
+        reader.readAsDataURL(file);
+
+    } else {
+
+        if (currentEdit === null) {
+            alert("Bitte Bild wählen!");
+            return;
+        }
+
+        store(title, desc, projects[currentEdit].img);
+
+    }
+
+}
+
+function store(title, desc, img) {
+
+    const obj = { title, desc, img };
+
+    if (currentEdit === null) {
+
+        projects.push(obj);
+
+    } else {
+
+        projects[currentEdit] = obj;
+
+    }
+
+    localStorage.setItem("projects", JSON.stringify(projects));
+
+    closeModal();
+    render();
+
+}
+
+/* DETAIL */
+
+function openDetail(i) {
+
+    current = i;
+
+    const p = projects[i];
+
+    document.getElementById("detailImg").src = p.img;
+    document.getElementById("detailTitle").innerText = p.title;
+    document.getElementById("detailDesc").innerText = p.desc;
+
+    document.getElementById("detail").classList.add("active");
+}
+
+function closeDetail() {
+    document.getElementById("detail").classList.remove("active");
+}
+
+/* EDIT */
+
+function edit() {
+
+    closeDetail();
+
+    const p = projects[current];
+
+    currentEdit = current;
+
+    titleInput().value = p.title;
+    descInput().value = p.desc;
+
+    document.getElementById("editor").classList.add("active");
+}
+
+/* DELETE */
+
+function remove() {
+
+    if (!confirm("Wirklich löschen?")) return;
+
+    projects.splice(current, 1);
+
+    localStorage.setItem("projects", JSON.stringify(projects));
+
+    closeDetail();
+    render();
+}
+
+/* CLOSE */
+
+function closeModal() {
+    document.getElementById("editor").classList.remove("active");
+}
+
+/* HELPERS */
+
+function titleInput() {
+    return document.getElementById("title");
+}
+
+function descInput() {
+    return document.getElementById("desc");
+}
+
+function imageInput() {
+    return document.getElementById("image");
+}
+
+</script>
+
 </body>
 </html>
+
