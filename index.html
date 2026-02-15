@@ -1,152 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard</title>
+
+<title>Pro Dashboard</title>
+
+<!-- ICONS -->
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- GOOGLE FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
 
-/* THEME */
+/* ================= THEME ================= */
+
 :root{
---bg:#0d0f14;
---card:#171a22;
---accent:#5f7cff;
---text:#fff;
---muted:#aaa;
+  --bg:#0b0e14;
+  --card:rgba(255,255,255,0.06);
+  --border:rgba(255,255,255,0.1);
+  --accent:#5f7cff;
+  --text:#fff;
+  --muted:#aaa;
 }
 
-*{box-sizing:border-box;font-family:Segoe UI,sans-serif}
+*{
+  box-sizing:border-box;
+  font-family:Inter,sans-serif;
+}
 
-body{margin:0;background:var(--bg);color:var(--text)}
+body{
+  margin:0;
+  background:linear-gradient(135deg,#0b0e14,#141926);
+  color:var(--text);
+}
+
+/* ================= HEADER ================= */
 
 header{
-padding:25px;
-text-align:center;
-border-bottom:1px solid #222;
+  padding:30px;
+  text-align:center;
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(10px);
+}
+
+h1 i{
+  color:var(--accent);
+}
+
+nav{
+  margin-top:20px;
 }
 
 nav button{
-background:#222;
-color:#fff;
-border:none;
-padding:8px 14px;
-border-radius:6px;
-margin:5px;
-cursor:pointer;
+  background:transparent;
+  border:1px solid var(--border);
+  color:white;
+  padding:10px 20px;
+  border-radius:10px;
+  cursor:pointer;
+  margin:5px;
+  transition:.3s;
 }
 
-nav button:hover{background:var(--accent)}
+nav button:hover{
+  background:var(--accent);
+  transform:translateY(-2px);
+}
+
+/* ================= GRID ================= */
 
 #grid{
-padding:30px;
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:25px;
+  padding:40px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:30px;
 }
+
+/* ================= CARD ================= */
 
 .card{
-background:var(--card);
-border-radius:12px;
-overflow:hidden;
-position:relative;
-box-shadow:0 8px 20px rgba(0,0,0,.4);
-transition:.25s;
-cursor:pointer;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  overflow:hidden;
+  backdrop-filter:blur(15px);
+  box-shadow:0 15px 40px rgba(0,0,0,.4);
+  transition:.4s;
+  position:relative;
 }
 
-.card:hover{transform:translateY(-5px)}
+.card:hover{
+  transform:translateY(-8px) scale(1.01);
+}
 
 .card img{
-width:100%;
-height:180px;
-object-fit:cover;
+  width:100%;
+  height:180px;
+  object-fit:cover;
 }
 
-.card-content{padding:15px}
-
-.sold{
-position:absolute;
-inset:0;
-background:rgba(0,0,0,.85);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:2rem;
-color:red;
-font-weight:bold;
+.card-content{
+  padding:20px;
 }
+
+.card h3{
+  margin:0;
+}
+
+.card p{
+  color:var(--muted);
+  font-size:.9rem;
+}
+
+/* BADGES */
+
+.badge{
+  position:absolute;
+  top:12px;
+  right:12px;
+  padding:5px 10px;
+  border-radius:20px;
+  font-size:.75rem;
+  font-weight:600;
+}
+
+.sold{background:red;}
+.pending{background:orange;}
+.owned{background:limegreen;color:black}
+
+/* ================= MODAL ================= */
 
 #modal{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.85);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:1000;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.9);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
 }
 
-#modal.active{display:flex}
+#modal.active{
+  display:flex;
+}
 
 .modal-box{
-background:var(--card);
-padding:25px;
-width:90%;
-max-width:450px;
-border-radius:12px;
+  background:var(--card);
+  border:1px solid var(--border);
+  width:90%;
+  max-width:520px;
+  padding:25px;
+  border-radius:18px;
+  backdrop-filter:blur(15px);
+  animation:pop .3s ease;
+}
+
+@keyframes pop{
+  from{transform:scale(.9);opacity:0}
+  to{transform:scale(1);opacity:1}
 }
 
 .modal-box img{
-width:100%;
-border-radius:8px;
-margin-bottom:10px;
+  width:100%;
+  border-radius:12px;
+  margin-bottom:15px;
 }
+
+/* BUTTON */
 
 .btn{
-width:100%;
-padding:10px;
-margin-top:10px;
-border:none;
-background:var(--accent);
-color:white;
-border-radius:6px;
-cursor:pointer;
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  border:none;
+  background:var(--accent);
+  color:white;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+  transition:.3s;
 }
 
+.btn:hover{
+  opacity:.9;
+  transform:translateY(-2px);
+}
+
+/* ================= LOGIN ================= */
+
 #login{
-position:fixed;
-inset:0;
-background:black;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:2000;
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:2000;
 }
 
 #login-box{
-background:var(--card);
-padding:25px;
-border-radius:12px;
-width:300px;
-text-align:center;
+  background:var(--card);
+  border:1px solid var(--border);
+  padding:35px;
+  border-radius:20px;
+  width:320px;
+  text-align:center;
+  backdrop-filter:blur(15px);
 }
 
 #login input{
-width:100%;
-padding:10px;
-background:#111;
-border:1px solid #333;
-color:white;
-border-radius:6px;
-margin:10px 0;
+  width:100%;
+  padding:12px;
+  margin:15px 0;
+  background:#111;
+  border:1px solid #333;
+  color:white;
+  border-radius:10px;
 }
 
+/* ================= FOOTER ================= */
+
 footer{
-text-align:center;
-padding:15px;
-border-top:1px solid #222;
-color:var(--muted);
+  text-align:center;
+  padding:20px;
+  border-top:1px solid var(--border);
+  color:var(--muted);
 }
 
 </style>
@@ -156,23 +238,31 @@ color:var(--muted);
 
 <!-- LOGIN -->
 <div id="login">
- <div id="login-box">
-  <h2>Login</h2>
-  <p>Roblox Username</p>
-  <input id="usernameInput">
-  <button class="btn" onclick="login()">Login</button>
- </div>
+  <div id="login-box">
+    <h2><i class="fa-solid fa-user-lock"></i> Login</h2>
+    <p>Roblox Username</p>
+
+    <input id="usernameInput" placeholder="Username">
+
+    <button class="btn" onclick="login()">
+      <i class="fa-solid fa-right-to-bracket"></i> Login
+    </button>
+  </div>
 </div>
 
 <header>
 
-<h1>🎮 Dashboard</h1>
-<p id="user"></p>
+<h1>
+  <i class="fa-solid fa-gamepad"></i>
+  Pro Dashboard
+</h1>
+
+<p id="userDisplay"></p>
 
 <nav>
- <button onclick="showAll()">All</button>
- <button onclick="showPending()">Pending</button>
- <button onclick="showPurchased()">Purchased</button>
+  <button onclick="showAll()"><i class="fa-solid fa-layer-group"></i> All</button>
+  <button onclick="showPending()"><i class="fa-solid fa-clock"></i> Pending</button>
+  <button onclick="showPurchased()"><i class="fa-solid fa-check"></i> Purchased</button>
 </nav>
 
 </header>
@@ -181,234 +271,225 @@ color:var(--muted);
 
 <!-- MODAL -->
 <div id="modal">
- <div class="modal-box">
 
-  <img id="m-img">
+  <div class="modal-box">
 
-  <h2 id="m-title"></h2>
+    <img id="m-img">
 
-  <p id="m-desc"></p>
+    <h2 id="m-title"></h2>
 
-  <p>💲 <b id="m-price"></b></p>
+    <p id="m-desc"></p>
 
-  <p>🎫 <b id="m-gamepass"></b></p>
+    <p><i class="fa-solid fa-dollar-sign"></i> <b id="m-price"></b></p>
 
-  <button class="btn" onclick="addPending()">Add to Pending</button>
-  <button class="btn" onclick="closeModal()">Close</button>
+    <p><i class="fa-solid fa-ticket"></i> <b id="m-gamepass"></b></p>
 
- </div>
+    <button class="btn" onclick="addPending()">
+      <i class="fa-solid fa-cart-plus"></i> Add Pending
+    </button>
+
+    <button class="btn" onclick="closeModal()">
+      <i class="fa-solid fa-xmark"></i> Close
+    </button>
+
+  </div>
+
 </div>
 
 <footer>
-© 2026 Your Project
+© 2026 • Pro Dashboard
 </footer>
 
 <script>
 
-/* ================= CONFIG ================= */
+/* ================= DATA ================= */
 
-const WEBHOOK_URL = "";
-
-/* ================= DATABASE ================= */
-
-const projects = [
+const projects=[
 
 {
- id:"space01",
- title:"Space Adventure",
- description:"Explore galaxies",
- price:"$9.99",
- gamepass:"Required",
- image:"img/space.jpg",
-
- purchased:false,
- buyer:""
+  title:"Space Adventure",
+  description:"Explore galaxies.",
+  price:"$9.99",
+  gamepass:"Required",
+  image:"img/space.jpg",
+  purchased:false,
+  buyer:""
 },
 
 {
- id:"race01",
- title:"Racing Pro",
- description:"Fast racing",
- price:"Free",
- gamepass:"Not Required",
- image:"img/race.jpg",
-
- purchased:true,
- buyer:"Max"
+  title:"Racing Pro",
+  description:"Fast racing game.",
+  price:"Free",
+  gamepass:"Not Required",
+  image:"img/race.jpg",
+  purchased:true,
+  buyer:"Max"
 },
 
 {
- id:"zombie01",
- title:"Zombie World",
- description:"Survive",
- price:"$4.99",
- gamepass:"Required",
- image:"img/zombie.jpg",
-
- purchased:false,
- buyer:""
+  title:"Zombie World",
+  description:"Survive zombies.",
+  price:"$4.99",
+  gamepass:"Required",
+  image:"img/zombie.jpg",
+  purchased:false,
+  buyer:""
 }
 
 ];
 
 /* ================= STORAGE ================= */
 
-let username = localStorage.getItem("name") || "";
-
-let pending =
-JSON.parse(localStorage.getItem("pending")||"[]");
+let username=localStorage.getItem("name")||"";
+let pending=JSON.parse(localStorage.getItem("pending"))||[];
 
 /* ================= LOGIN ================= */
 
 function login(){
 
- const name =
- document.getElementById("usernameInput").value.trim();
+  const name=usernameInput.value.trim();
 
- if(!name) return alert("Enter username");
+  if(!name) return alert("Enter username");
 
- username = name;
+  username=name;
 
- localStorage.setItem("name",name);
+  localStorage.setItem("name",name);
 
- document.getElementById("login").style.display="none";
+  login.style.display="none";
 
- init();
-}
-
-if(username){
- document.getElementById("login").style.display="none";
- init();
+  init();
 }
 
 /* ================= INIT ================= */
 
 function init(){
 
- document.getElementById("user").innerText =
- "👤 "+username;
+  userDisplay.innerHTML=
+   `<i class="fa-solid fa-user"></i> ${username}`;
 
- render(projects);
+  render(projects);
+}
+
+if(username){
+  login.style.display="none";
+  init();
 }
 
 /* ================= RENDER ================= */
 
-const grid = document.getElementById("grid");
+const grid=document.getElementById("grid");
 
-let selectedID = null;
+let selected=null;
 
 function render(list){
 
- grid.innerHTML="";
+  grid.innerHTML="";
 
- list.forEach(p=>{
+  list.forEach((p,i)=>{
 
-  const card = document.createElement("div");
-  card.className="card";
+    const card=document.createElement("div");
 
-  card.innerHTML=`
-   <img src="${p.image}">
-   <div class="card-content">
-    <h3>${p.title}</h3>
-    <p>${p.description}</p>
-   </div>
-  `;
+    card.className="card";
 
-  if(p.purchased && p.buyer !== username){
+    let badge="";
 
-   const sold = document.createElement("div");
-   sold.className="sold";
-   sold.innerText="SOLD";
-   card.appendChild(sold);
+    if(p.purchased && p.buyer!==username){
+      badge=`<div class="badge sold">SOLD</div>`;
+    }
+    else if(pending.includes(p.title)){
+      badge=`<div class="badge pending">PENDING</div>`;
+    }
+    else if(p.buyer===username){
+      badge=`<div class="badge owned">OWNED</div>`;
+    }
 
-  }else{
+    card.innerHTML=`
 
-   card.onclick=()=>openModal(p.id);
+      ${badge}
 
-  }
+      <img src="${p.image}">
 
-  grid.appendChild(card);
- });
+      <div class="card-content">
+
+        <h3>${p.title}</h3>
+
+        <p>${p.description}</p>
+
+      </div>
+    `;
+
+    if(!p.purchased || p.buyer===username){
+      card.onclick=()=>openModal(i);
+    }
+
+    grid.appendChild(card);
+
+  });
 }
 
 /* ================= MODAL ================= */
 
-function openModal(id){
+function openModal(i){
 
- const p = projects.find(x=>x.id===id);
+  selected=i;
 
- selectedID = id;
+  const p=projects[i];
 
- document.getElementById("m-img").src=p.image;
- document.getElementById("m-title").innerText=p.title;
- document.getElementById("m-desc").innerText=p.description;
- document.getElementById("m-price").innerText=p.price;
- document.getElementById("m-gamepass").innerText=p.gamepass;
+  m-img.src=p.image;
+  m-title.innerText=p.title;
+  m-desc.innerText=p.description;
+  m-price.innerText=p.price;
+  m-gamepass.innerText=p.gamepass;
 
- document.getElementById("modal").classList.add("active");
+  modal.classList.add("active");
 }
 
 function closeModal(){
- document.getElementById("modal").classList.remove("active");
+  modal.classList.remove("active");
 }
 
 /* ================= PENDING ================= */
 
 function addPending(){
 
- if(!selectedID) return;
+  const p=projects[selected];
 
- if(!pending.includes(selectedID)){
+  if(pending.includes(p.title)) return;
 
-  pending.push(selectedID);
+  pending.push(p.title);
 
   localStorage.setItem("pending",
-  JSON.stringify(pending));
+   JSON.stringify(pending));
 
-  sendWebhook(selectedID);
- }
+  closeModal();
 
- closeModal();
- alert("Added ✅");
-}
+  render(projects);
 
-/* ================= WEBHOOK ================= */
-
-function sendWebhook(id){
-
- if(!WEBHOOK_URL) return;
-
- const p=projects.find(x=>x.id===id);
-
- fetch(WEBHOOK_URL,{
-  method:"POST",
-  headers:{"Content-Type":"application/json"},
-  body:JSON.stringify({
-   content:`User: ${username}\nProduct: ${p.title}`
-  })
- });
+  alert("Added ✅");
 }
 
 /* ================= FILTER ================= */
 
 function showAll(){
- render(projects);
+  render(projects);
 }
 
 function showPending(){
 
- const list = projects.filter(p=>
- pending.includes(p.id));
-
- render(list);
+  render(
+    projects.filter(p =>
+      pending.includes(p.title)
+    )
+  );
 }
 
 function showPurchased(){
 
- const list = projects.filter(p=>
- p.purchased && p.buyer===username);
-
- render(list);
+  render(
+    projects.filter(p =>
+      p.buyer===username
+    )
+  );
 }
 
 </script>
