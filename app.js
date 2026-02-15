@@ -1,106 +1,148 @@
-let projects = [];
-let pendingList = [];
-let currentUser = "";
+let currentFilter = 'all';
+let selectedProductId = null;
 
-window.initApp = function() {
-    currentUser = localStorage.getItem('v_user');
-    const stored = localStorage.getItem('v_pending');
-    pendingList = stored ? JSON.parse(stored) : [];
-    projects = [...initialProjects];
-    
-    render(projects);
+// Initialisierung
+window.onload = () => {
+    if (checkLogin()) {
+        cleanPending();
+        render();
+    }
 };
 
-function render(list) {
-    const grid = document.getElementById('projects-grid');
-    grid.innerHTML = "";
+function render() {
+    const user = localStorage.getItem('velocityUser');
+    const pendingList = JSON.parse(localStorage.getItem('velocityPending') || "[]");
+    const grid = document.getElementById('productGrid');
+    grid.innerHTML = '';
 
-    list.forEach(p => {
-        const isOwned = p.purchased && p.buyer === currentUser;
-        const isSold = p.purchased && p.buyer !== currentUser;
+    const filtered = projects.filter(p => {
+        if (currentFilter === 'pending') return pendingList.includes(p.id);
+        if (currentFilter === 'purchased') return p.purchased && p.buyer === user;
+        return true;
+    });
+
+    filtered.forEach(p => {
         const isPending = pendingList.includes(p.id);
+        const isOwned = p.purchased && p.buyer === user;
+        const isSold = p.purchased && p.buyer !== user;
 
-        let badge = "";
-        if (isOwned) badge = '<span class="badge" style="background:var(--success)">OWNED</span>';
-        else if (isSold) badge = '<span class="badge" style="background:var(--sold)">SOLD</span>';
-        else if (isPending) badge = '<span class="badge" style="background:var(--pending)">PENDING</span>';
+        let badge = '';
+        if (isOwned) badge = '<span class="badge badge-owned">OWNED</span>';
+        else if (isSold) badge = '<span class="badge badge-sold">SOLD</span>';
+        else if (isPending) badge = '<span class="badge badge-pending">PENDING</span>';
 
         const card = document.createElement('div');
         card.className = 'card';
+        card.onclick = () => openModal(p.id);
         card.innerHTML = `
-            <div class="card-img" style="background-image: url('${p.image}')"></div>
-            <div class="card-content">
-                <span class="price-tag">${p.price}</span>
+            ${badge}
+            <img src="${p.image}" alt="${p.title}">
+            <div class="card-body">
                 <h3>${p.title}</h3>
-                ${badge}
+                <p>${p.price}</p>
+                <div class="tags">${p.tags.map(t => `<small>#${t} </small>`).join('')}</div>
             </div>
         `;
-        card.onclick = () => openModal(p);
         grid.appendChild(card);
     });
 }
 
-function openModal(p) {
-    const isOwned = p.purchased && p.buyer === currentUser;
-    const isSold = p.purchased && p.buyer !== currentUser;
-    const isPending = pendingList.includes(p.id);
-
-    document.getElementById('modal-img-bg').style.backgroundImage = `url('${p.image}')`;
-    document.getElementById('modal-title').innerText = p.title;
-    document.getElementById('modal-desc').innerText = p.description;
-    document.getElementById('modal-price').innerText = p.price;
-    document.getElementById('modal-gamepass').innerText = p.gamepass;
+function openModal(id) {
+    const p = projects.find(x => x.id === id);
+    const user = localStorage.getItem('velocityUser');
+    const pendingList = JSON.parse(localStorage.getItem('velocityPending') || "[]");
     
-    const area = document.getElementById('modal-action-area');
-    const msg = document.getElementById('modal-status-msg');
-    
-    area.classList.add('hidden');
-    msg.classList.add('hidden');
+    selectedProductId = id;
+    const modal = document.getElementById('modal');
+    const details = document.getElementById('modalDetails');
+    const confirmBtn = document.getElementById('confirmBtn');
 
-    if (isOwned || isSold || isPending) {
-        msg.classList.remove('hidden');
-        msg.innerHTML = isOwned ? "Besitzt" : isSold ? "Verkauft" : "In Bearbeitung (Pending)";
+    details.innerHTML = `
+        <img src="${p.image}" style="width:100%; border-radius:8px;">
+        <h2>${p.title}</h2>
+        <p>${p.description}</p>
+        <p><strong>Preis:</strong> ${p.price}</p>
+        <p><strong>Gamepass:</strong> ${p.gamepass}</p>
+    `;
+
+    // Button Logik
+    if (p.purchased || pendingList.includes(id)) {
+        confirmBtn.style.display = 'none';
+        document.getElementById('contactInput').style.display = 'none';
     } else {
-        area.classList.remove('hidden');
-        document.getElementById('confirm-pending-btn').onclick = () => {
-            const contact = document.getElementById('contact-input').value;
-            if (contact) {
-                pendingList.push(p.id);
-                localStorage.setItem('v_pending', JSON.stringify(pendingList));
-                sendWebhook(p, contact);
-                document.getElementById('product-modal').classList.add('hidden');
-                render(projects);
-            }
-        };
+        confirmBtn.style.display = 'block';
+        document.getElementById('contactInput').style.display = 'block';
+        confirmBtn.onclick = () => addPending(p);
     }
-    document.getElementById('product-modal').classList.remove('hidden');
+
+    modal.style.display = 'block';
 }
 
-function sendWebhook(p, contact) {
-    if (WEBHOOK_URL === "DEINE_DISCORD_WEBHOOK_URL") return;
-    fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            embeds: [{
-                title: "Neue Pending Anfrage",
-                fields: [
-                    { name: "Produkt", value: p.title },
-                    { name: "User", value: currentUser },
-                    { name: "Kontakt", value: contact }
-                ],
-                color: 5814783
-            }]
-        })
+function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+}
+
+function addPending(product) {
+    const contact = document.getElementById('contactInput').value;
+    const user = localStorage.getItem('velocityUser');
+
+    if (!contact) {
+        alert("Bitte gib eine Kontaktmöglichkeit an!");
+        return;
+    }
+
+    let pendingList = JSON.parse(localStorage.getItem('velocityPending') || "[]");
+    pendingList.push(product.id);
+    localStorage.setItem('velocityPending', JSON.stringify(pendingList));
+
+    sendWebhook(product, user, contact);
+    closeModal();
+    render();
+}
+
+async function sendWebhook(product, user, contact) {
+    if (!WEBHOOK_URL || WEBHOOK_URL === "DEINE_DISCORD_WEBHOOK_URL_HIER") return;
+
+    const payload = {
+        embeds: [{
+            title: "🆕 Neue Pending-Anfrage",
+            color: 15844367,
+            fields: [
+                { name: "Produkt", value: product.title, inline: true },
+                { name: "User", value: user, inline: true },
+                { name: "Kontakt", value: contact }
+            ],
+            timestamp: new Date()
+        }]
+    };
+
+    try {
+        await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+    } catch (e) { console.error("Webhook Error", e); }
+}
+
+function cleanPending() {
+    let pendingList = JSON.parse(localStorage.getItem('velocityPending') || "[]");
+    // Entferne IDs, die in der Datenbank als verkauft markiert sind
+    pendingList = pendingList.filter(id => {
+        const p = projects.find(x => x.id === id);
+        return p && !p.purchased;
     });
+    localStorage.setItem('velocityPending', JSON.stringify(pendingList));
 }
 
-document.querySelector('.close-modal').onclick = () => {
-    document.getElementById('product-modal').classList.add('hidden');
-};
+// Filter Navigation
+function showAll() { updateFilter('all', 'btn-all'); }
+function showPending() { updateFilter('pending', 'btn-pending'); }
+function showPurchased() { updateFilter('purchased', 'btn-purchased'); }
 
-function filterProjects(type) {
-    if (type === 'all') render(projects);
-    if (type === 'pending') render(projects.filter(p => pendingList.includes(p.id)));
-    if (type === 'purchased') render(projects.filter(p => p.purchased && p.buyer === currentUser));
+function updateFilter(filter, btnId) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(btnId).classList.add('active');
+    render();
 }
