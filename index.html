@@ -4,163 +4,188 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>My Products</title>
+<title>Product Dashboard</title>
 
 <style>
 
-/* =========================
-   THEME
-========================= */
+/* ================= THEME ================= */
 
 :root {
-  --bg: #0d0f14;
-  --card: #171a22;
-  --accent: #5f7cff;
-  --text: #ffffff;
-  --muted: #9aa0aa;
+  --bg:#0d0f14;
+  --card:#171a22;
+  --accent:#5f7cff;
+  --text:#fff;
+  --muted:#aaa;
 }
 
 * {
-  box-sizing: border-box;
-  font-family: "Segoe UI", system-ui, sans-serif;
+  box-sizing:border-box;
+  font-family:Segoe UI,sans-serif;
 }
 
-/* =========================
-   BODY
-========================= */
-
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
 }
 
-/* =========================
-   HEADER
-========================= */
+/* ================= HEADER ================= */
 
-header {
-  padding: 40px 20px;
-  text-align: center;
-  border-bottom: 1px solid #222;
+header{
+  padding:25px;
+  text-align:center;
+  border-bottom:1px solid #222;
 }
 
-header h1 {
-  font-size: 2.4rem;
+nav{
+  margin-top:15px;
 }
 
-header p {
-  color: var(--muted);
+nav button{
+  background:#222;
+  color:white;
+  border:none;
+  padding:8px 15px;
+  border-radius:6px;
+  cursor:pointer;
+  margin:0 5px;
 }
 
-/* =========================
-   GRID
-========================= */
-
-#grid {
-  padding: 40px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 25px;
+nav button:hover{
+  background:var(--accent);
 }
 
-/* =========================
-   CARD
-========================= */
+/* ================= GRID ================= */
 
-.card {
-  background: var(--card);
-  border-radius: 14px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: .25s;
-  box-shadow: 0 10px 25px rgba(0,0,0,.4);
+#grid{
+  padding:30px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;
 }
 
-.card:hover {
-  transform: translateY(-6px);
+/* ================= CARD ================= */
+
+.card{
+  background:var(--card);
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,.4);
+  transition:.25s;
+  position:relative;
 }
 
-.card img {
-  width: 100%;
-  height: 190px;
-  object-fit: cover;
+.card:hover{
+  transform:translateY(-5px);
 }
 
-.card-content {
-  padding: 18px;
+.card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
 }
 
-.card h3 {
-  margin: 0 0 6px;
+.card-content{
+  padding:15px;
 }
 
-.card p {
-  font-size: .9rem;
-  color: var(--muted);
+.card p{
+  color:var(--muted);
+  font-size:.9rem;
 }
 
-/* =========================
-   MODAL
-========================= */
+/* SOLD */
 
-#modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.85);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+.sold{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:2rem;
+  font-weight:bold;
+  color:red;
 }
 
-#modal.active {
-  display: flex;
+/* ================= MODAL ================= */
+
+#modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:999;
 }
 
-.modal-box {
-  background: var(--card);
-  padding: 25px;
-  width: 90%;
-  max-width: 480px;
-  border-radius: 14px;
+#modal.active{
+  display:flex;
 }
 
-/* =========================
-   DETAILS
-========================= */
-
-.modal-box img {
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 15px;
+.modal-box{
+  background:var(--card);
+  width:90%;
+  max-width:480px;
+  padding:25px;
+  border-radius:12px;
 }
 
-.info {
-  margin: 12px 0;
+.modal-box img{
+  width:100%;
+  border-radius:8px;
+  margin-bottom:10px;
 }
 
-.badge {
-  display: inline-block;
-  background: var(--accent);
-  padding: 5px 10px;
-  border-radius: 6px;
-  font-size: .8rem;
+.btn{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  border:none;
+  background:var(--accent);
+  color:white;
+  border-radius:6px;
+  cursor:pointer;
 }
 
-.close {
-  margin-top: 15px;
-  width: 100%;
-  padding: 10px;
-  border: none;
-  background: #222;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
+/* ================= LOGIN ================= */
+
+#login{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:2000;
 }
 
-.close:hover {
-  background: #333;
+#login-box{
+  background:var(--card);
+  padding:30px;
+  border-radius:12px;
+  width:300px;
+  text-align:center;
+}
+
+#login input{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+  background:#111;
+  border:1px solid #333;
+  color:white;
+  border-radius:6px;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  text-align:center;
+  padding:15px;
+  border-top:1px solid #222;
+  color:var(--muted);
 }
 
 </style>
@@ -168,14 +193,32 @@ header p {
 
 <body>
 
+<!-- LOGIN -->
+<div id="login">
+  <div id="login-box">
+    <h2>Login</h2>
+    <p>Enter your Roblox Username</p>
+    <input id="usernameInput" placeholder="Roblox Username">
+    <button class="btn" onclick="login()">Login</button>
+  </div>
+</div>
+
 <header>
-  <h1>Velcoity Rides</h1>
-  <p>About Us • Products</p>
+
+<h1>🎮 Product Dashboard</h1>
+<p id="userDisplay"></p>
+
+<nav>
+  <button onclick="showAll()">All</button>
+  <button onclick="showPending()">Pending</button>
+  <button onclick="showPurchased()">Purchased</button>
+</nav>
+
 </header>
 
 <main id="grid"></main>
 
-<!-- MODAL -->
+<!-- DETAIL MODAL -->
 <div id="modal">
 
   <div class="modal-box">
@@ -186,107 +229,228 @@ header p {
 
     <p id="m-desc"></p>
 
-    <div class="info">
-      💲 Price: <strong id="m-price"></strong>
-    </div>
+    <p>💲 Price: <b id="m-price"></b></p>
 
-    <div class="info">
-      🎫 Gamepass: <span class="badge" id="m-gamepass"></span>
-    </div>
+    <p>🎫 Gamepass: <b id="m-gamepass"></b></p>
 
-    <button class="close" onclick="closeModal()">Close</button>
+    <button class="btn" onclick="addPending()">Add To Pending</button>
+
+    <button class="btn" onclick="closeModal()">Close</button>
 
   </div>
 
 </div>
 
+<footer>
+© 2026 Your Company • All Rights Reserved
+</footer>
+
 <script>
 
-/* =========================
-   PROJECT DATABASE
-   (EDIT ONLY THIS PART)
-========================= */
+/* ================= DISCORD WEBHOOK ================= */
+
+const WEBHOOK_URL = "PUT_YOUR_DISCORD_WEBHOOK_HERE";
+
+/* ================= DATABASE ================= */
 
 const projects = [
 
-  {
-    title: "Space Adventure",
-    description: "Explore the universe and discover new planets.",
-    price: "$14.99",
-    gamepass: "Required",
-    image: "img/space.jpg"
-  },
+{
+  title:"Space Adventure",
+  description:"Explore galaxies.",
+  price:"$9.99",
+  gamepass:"Required",
+  image:"img/space.jpg",
 
-  {
-    title: "Racing Pro",
-    description: "High-speed competitive racing game.",
-    price: "Free",
-    gamepass: "Not Required",
-    image: "img/race.jpg"
-  },
+  purchased:false,
+  buyer:""
+},
 
-  {
-    title: "Zombie Survival",
-    description: "Survive waves of zombies in an open world.",
-    price: "$9.99",
-    gamepass: "Required",
-    image: "img/zombie.jpg"
-  }
+{
+  title:"Racing Pro",
+  description:"Fast racing game.",
+  price:"Free",
+  gamepass:"Not Required",
+  image:"img/race.jpg",
+
+  purchased:true,
+  buyer:"Max"
+},
+
+{
+  title:"Zombie World",
+  description:"Survive zombies.",
+  price:"$4.99",
+  gamepass:"Required",
+  image:"img/zombie.jpg",
+
+  purchased:false,
+  buyer:""
+}
 
 ];
 
-/* =========================
-   RENDER SYSTEM
-========================= */
+/* ================= STORAGE ================= */
+
+let username = localStorage.getItem("name") || "";
+let pending = JSON.parse(localStorage.getItem("pending")) || [];
+let purchased = JSON.parse(localStorage.getItem("purchased")) || [];
+
+/* ================= LOGIN ================= */
+
+function login(){
+
+  const name = document.getElementById("usernameInput").value.trim();
+
+  if(!name) return alert("Enter username");
+
+  username = name;
+
+  localStorage.setItem("name",name);
+
+  document.getElementById("login").style.display="none";
+
+  init();
+}
+
+/* ================= INIT ================= */
+
+function init(){
+
+  document.getElementById("userDisplay").innerText =
+    "👤 Logged in: " + username;
+
+  render(projects);
+}
+
+if(username){
+  document.getElementById("login").style.display="none";
+  init();
+}
+
+/* ================= RENDER ================= */
 
 const grid = document.getElementById("grid");
 
-function renderProjects() {
+let currentList = projects;
+let selected = null;
 
-  grid.innerHTML = "";
+function render(list){
 
-  projects.forEach((project, index) => {
+  grid.innerHTML="";
+
+  list.forEach((p,i)=>{
 
     const card = document.createElement("div");
-    card.className = "card";
+    card.className="card";
 
-    card.innerHTML = `
-      <img src="${project.image}">
+    card.innerHTML=`
+      <img src="${p.image}">
       <div class="card-content">
-        <h3>${project.title}</h3>
-        <p>${project.description}</p>
+        <h3>${p.title}</h3>
+        <p>${p.description}</p>
       </div>
     `;
 
-    card.onclick = () => openModal(index);
+    /* SOLD SYSTEM */
+    if(p.purchased && p.buyer !== username){
+
+      const sold = document.createElement("div");
+      sold.className="sold";
+      sold.innerText="SOLD";
+      card.appendChild(sold);
+
+    }else{
+
+      card.onclick = ()=>openModal(i);
+
+    }
 
     grid.appendChild(card);
 
   });
-
 }
 
-renderProjects();
+/* ================= MODAL ================= */
 
-/* =========================
-   MODAL SYSTEM
-========================= */
+function openModal(i){
 
-function openModal(i) {
+  selected = i;
 
   const p = projects[i];
 
   document.getElementById("m-img").src = p.image;
-  document.getElementById("m-title").textContent = p.title;
-  document.getElementById("m-desc").textContent = p.description;
-  document.getElementById("m-price").textContent = p.price;
-  document.getElementById("m-gamepass").textContent = p.gamepass;
+  document.getElementById("m-title").innerText = p.title;
+  document.getElementById("m-desc").innerText = p.description;
+  document.getElementById("m-price").innerText = p.price;
+  document.getElementById("m-gamepass").innerText = p.gamepass;
 
   document.getElementById("modal").classList.add("active");
 }
 
-function closeModal() {
+function closeModal(){
   document.getElementById("modal").classList.remove("active");
+}
+
+/* ================= PENDING ================= */
+
+function addPending(){
+
+  const p = projects[selected];
+
+  if(pending.includes(p.title)) return;
+
+  pending.push(p.title);
+
+  localStorage.setItem("pending",JSON.stringify(pending));
+
+  sendWebhook(p.title);
+
+  closeModal();
+
+  alert("Added to pending ✅");
+}
+
+/* ================= WEBHOOK ================= */
+
+function sendWebhook(product){
+
+  if(!WEBHOOK_URL) return;
+
+  fetch(WEBHOOK_URL,{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify({
+      username:"Store Bot",
+      content:`User: ${username}\nProduct: ${product}`
+    })
+  });
+}
+
+/* ================= FILTERS ================= */
+
+function showAll(){
+  render(projects);
+}
+
+function showPending(){
+
+  const list = projects.filter(p =>
+    pending.includes(p.title)
+  );
+
+  render(list);
+}
+
+function showPurchased(){
+
+  const list = projects.filter(p =>
+    p.purchased && p.buyer === username
+  );
+
+  render(list);
 }
 
 </script>
