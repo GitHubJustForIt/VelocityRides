@@ -3,74 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Velocity Rides | Premium Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Velocity Rides | Premium Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <div id="loginBox" class="auth-wrapper">
-        <div class="glass-card login-card fade-in">
-            <div class="logo-circle">
-                <i class="fas fa-bolt"></i>
+    <section id="loginBox" class="auth-screen">
+        <div class="login-glow"></div>
+        <div class="glass-card login-panel fade-in">
+            <div class="brand-badge">v1.2</div>
+            <h1>Velocity<span>Rides</span></h1>
+            <p>Authentication required to access templates.</p>
+            <div class="input-wrapper">
+                <input type="text" id="usernameInput" placeholder="Enter Username...">
+                <button onclick="handleLogin()"><i class="fas fa-chevron-right"></i></button>
             </div>
-            <h2>Velocity Rides</h2>
-            <p>Member Access</p>
-            <div class="input-group">
-                <i class="fas fa-user"></i>
-                <input type="text" id="usernameInput" placeholder="Username">
-            </div>
-            <button onclick="handleLogin()" class="btn-primary">
-                Eintreten <i class="fas fa-arrow-right"></i>
-            </button>
         </div>
-    </div>
+    </section>
 
     <div id="app" style="display: none;">
-        <header class="main-header fade-in">
-            <div class="nav-container">
-                <div class="brand">
-                    <span class="logo-text">VELOCITY <span class="thin">RIDES</span></span>
-                </div>
-                <div class="user-profile">
-                    <span id="displayUser"></span>
-                    <button onclick="handleLogout()" class="btn-icon"><i class="fas fa-sign-out-alt"></i></button>
-                </div>
+        <header class="top-nav">
+            <div class="nav-inner">
+                <div class="logo">VELOCITY</div>
+                <nav class="main-tabs">
+                    <button onclick="showAll()" id="btn-all" class="tab active">Explore</button>
+                    <button onclick="showPending()" id="btn-pending" class="tab">Queue</button>
+                    <button onclick="showPurchased()" id="btn-purchased" class="tab">Vault</button>
+                </nav>
+                <div class="user-tag" id="displayUser"></div>
             </div>
-            
-            <nav class="filter-bar">
-                <button onclick="showAll()" class="filter-btn active" id="btn-all">Alle Produkte</button>
-                <button onclick="showPending()" class="filter-btn" id="btn-pending">Warteschlange</button>
-                <button onclick="showPurchased()" class="filter-btn" id="btn-purchased">Mein Besitz</button>
-            </nav>
         </header>
 
-        <section class="steps-section fade-in">
-            <div class="step-wrapper">
-                <div class="step active"><i class="fas fa-search"></i><span>Wählen</span></div>
-                <div class="line"></div>
-                <div class="step"><i class="fas fa-hourglass-start"></i><span>Pending</span></div>
-                <div class="line"></div>
-                <div class="step"><i class="fas fa-comments"></i><span>Kontakt</span></div>
-                <div class="line"></div>
-                <div class="step"><i class="fas fa-check-double"></i><span>Fertig</span></div>
+        <section class="process-container">
+            <div class="process-line">
+                <div class="p-step active" data-step="1">
+                    <div class="dot"><i class="fas fa-search"></i></div>
+                    <span>Wählen</span>
+                </div>
+                <div class="p-step" data-step="2">
+                    <div class="dot"><i class="fas fa-clock"></i></div>
+                    <span>Pending</span>
+                </div>
+                <div class="p-step" data-step="3">
+                    <div class="dot"><i class="fas fa-envelope"></i></div>
+                    <span>Kontakt</span>
+                </div>
+                <div class="p-step" data-step="4">
+                    <div class="dot"><i class="fas fa-check-double"></i></div>
+                    <span>Fertig</span>
+                </div>
             </div>
         </section>
 
-        <main id="productGrid" class="product-grid fade-in"></main>
+        <main id="productGrid" class="main-content"></main>
+
+        <footer class="pro-footer">
+            <div class="footer-content">
+                <div class="f-left">
+                    <p>&copy; 2026 VELOCITY RIDES. All rights reserved.</p>
+                    <span>Built for the next generation of digital creators.</span>
+                </div>
+                <div class="f-right">
+                    <a href="#">Terms</a>
+                    <a href="#">Privacy</a>
+                    <a href="#" class="status-indicator"><span class="live-dot"></span> System Live</a>
+                </div>
+            </div>
+        </footer>
     </div>
 
-    <div id="modal" class="modal-overlay">
-        <div class="glass-card modal-content slide-up">
-            <button class="close-btn" onclick="closeModal()">&times;</button>
+    <div id="modal" class="modal-system">
+        <div class="modal-blur" onclick="closeModal()"></div>
+        <div class="modal-window slide-up">
             <div id="modalDetails"></div>
-            <div class="modal-action-area">
-                <div class="input-group">
-                    <i class="fab fa-discord"></i>
-                    <input type="text" id="contactInput" placeholder="Discord / TikTok Name">
-                </div>
-                <button id="confirmBtn" class="btn-confirm">Bestätigen & Reservieren</button>
+            <div class="action-footer">
+                <input type="text" id="contactInput" placeholder="Discord Tag (e.g. User#0000)">
+                <button id="confirmBtn" class="btn-action">Reserve Item</button>
             </div>
         </div>
     </div>
