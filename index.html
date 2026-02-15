@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pro Dashboard</title>
+<title>Velocity Rides</title>
 
 <!-- Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -26,14 +26,22 @@
 <div id="app" style="display:none">
 
 <header>
-  <h1><i class="fa-solid fa-gamepad"></i> Dashboard</h1>
+  <h1><i class="fa-solid fa-rocket"></i> Velocity Rides</h1>
   <p id="userDisplay"></p>
   <nav>
-    <button onclick="showAll()"><i class="fa-solid fa-layer-group"></i> All</button>
-    <button onclick="showPending()"><i class="fa-solid fa-clock"></i> Pending</button>
-    <button onclick="showPurchased()"><i class="fa-solid fa-check"></i> Purchased</button>
+    <button class="nav-btn" onclick="showAll()"><i class="fa-solid fa-layer-group"></i> All</button>
+    <button class="nav-btn" onclick="showPending()"><i class="fa-solid fa-clock"></i> Pending</button>
+    <button class="nav-btn" onclick="showPurchased()"><i class="fa-solid fa-check"></i> Purchased</button>
   </nav>
 </header>
+
+<!-- Step-by-Step Anleitung -->
+<div id="steps">
+  <div class="step"><i class="fa-solid fa-hand-pointer"></i> 1. Set to Pending</div>
+  <div class="step"><i class="fa-solid fa-circle-check"></i> 2. Purchased with Success</div>
+  <div class="step"><i class="fa-solid fa-clock"></i> 3. Waiting for our team to contact you</div>
+  <div class="step"><i class="fa-solid fa-wrench"></i> 4. Our team builds it</div>
+</div>
 
 <main id="grid"></main>
 
@@ -47,14 +55,21 @@
     <p id="m-desc"></p>
     <p><i class="fa-solid fa-dollar-sign"></i> Price: <b id="m-price"></b></p>
     <p><i class="fa-solid fa-ticket"></i> Gamepass: <b id="m-gamepass"></b></p>
-    <button class="btn" onclick="addPending()"><i class="fa-solid fa-cart-plus"></i> Add to Pending</button>
+    <p id="m-tags"></p>
+    <p>Enter your Username and Contact (TikTok) to confirm:</p>
+    <input id="confirmUser" placeholder="Your Username">
+    <input id="contactInfo" placeholder="Contact (TikTok)">
+    <button class="btn" onclick="addPending()"><i class="fa-solid fa-cart-plus"></i> Confirm Pending</button>
     <button class="btn" onclick="closeModal()"><i class="fa-solid fa-xmark"></i> Close</button>
   </div>
 </div>
 
-<footer>© 2026 • Pro Dashboard</footer>
+<footer>
+  © VelocityRides 2026 • All Rights Reserved. <br>
+  Products are copyright protected.
+</footer>
 
-<!-- Scripts: Reihenfolge wichtig -->
+<!-- Scripts -->
 <script src="data.js"></script>
 <script src="login.js"></script>
 <script src="app.js"></script>
