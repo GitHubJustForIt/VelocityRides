@@ -1,5 +1,5 @@
 // Konfiguration
-const WEBHOOK_URL = "HIER_DEINE_DISCORD_WEBHOOK_URL_EINFUEGEN"; 
+const WEBHOOK_URL = "https://discordapp.com/api/webhooks/1472624952917364998/dLUkhFwa2ZyEhrNbOHfwyRe3ufr8BtwzgH_kcni2fgtugwfaABMOq3vwdPTzfqJ9Q2OE"; 
 
 // Initial Projects Data
 // ID ist wichtig für die Identifikation
