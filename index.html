@@ -3,65 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Velocity Rides | Dashboard</title>
+    <title>Velocity Rides | Premium Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <div id="loginBox" class="overlay-container">
-        <div class="login-card">
-            <img src="img/logo.png" alt="Logo" class="login-logo">
+    <div id="loginBox" class="auth-wrapper">
+        <div class="glass-card login-card fade-in">
+            <div class="logo-circle">
+                <i class="fas fa-bolt"></i>
+            </div>
             <h2>Velocity Rides</h2>
-            <p>Bitte loggen Sie sich ein, um fortzufahren.</p>
-            <input type="text" id="usernameInput" placeholder="Benutzername">
-            <button onclick="handleLogin()">Login <i class="fas fa-sign-in-alt"></i></button>
+            <p>Member Access</p>
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="usernameInput" placeholder="Username">
+            </div>
+            <button onclick="handleLogin()" class="btn-primary">
+                Eintreten <i class="fas fa-arrow-right"></i>
+            </button>
         </div>
     </div>
 
     <div id="app" style="display: none;">
-        <header>
-            <div class="header-content">
-                <h1>Velocity Rides</h1>
-                <div class="user-info">
+        <header class="main-header fade-in">
+            <div class="nav-container">
+                <div class="brand">
+                    <span class="logo-text">VELOCITY <span class="thin">RIDES</span></span>
+                </div>
+                <div class="user-profile">
                     <span id="displayUser"></span>
-                    <button onclick="handleLogout()" class="btn-logout">Logout</button>
+                    <button onclick="handleLogout()" class="btn-icon"><i class="fas fa-sign-out-alt"></i></button>
                 </div>
             </div>
             
-            <nav class="filters">
-                <button onclick="showAll()" class="filter-btn active" id="btn-all"><i class="fas fa-th"></i> All</button>
-                <button onclick="showPending()" class="filter-btn" id="btn-pending"><i class="fas fa-clock"></i> Pending</button>
-                <button onclick="showPurchased()" class="filter-btn" id="btn-purchased"><i class="fas fa-check-circle"></i> Purchased</button>
+            <nav class="filter-bar">
+                <button onclick="showAll()" class="filter-btn active" id="btn-all">Alle Produkte</button>
+                <button onclick="showPending()" class="filter-btn" id="btn-pending">Warteschlange</button>
+                <button onclick="showPurchased()" class="filter-btn" id="btn-purchased">Mein Besitz</button>
             </nav>
         </header>
 
-        <section class="steps-container">
-            <div class="step"><i class="fas fa-list-ul"></i><span>1. Choose</span></div>
-            <div class="arrow"><i class="fas fa-chevron-right"></i></div>
-            <div class="step"><i class="fas fa-hourglass-half"></i><span>2. Pending</span></div>
-            <div class="arrow"><i class="fas fa-chevron-right"></i></div>
-            <div class="step"><i class="fas fa-headset"></i><span>3. Contact</span></div>
-            <div class="arrow"><i class="fas fa-chevron-right"></i></div>
-            <div class="step"><i class="fas fa-hammer"></i><span>4. Built</span></div>
+        <section class="steps-section fade-in">
+            <div class="step-wrapper">
+                <div class="step active"><i class="fas fa-search"></i><span>Wählen</span></div>
+                <div class="line"></div>
+                <div class="step"><i class="fas fa-hourglass-start"></i><span>Pending</span></div>
+                <div class="line"></div>
+                <div class="step"><i class="fas fa-comments"></i><span>Kontakt</span></div>
+                <div class="line"></div>
+                <div class="step"><i class="fas fa-check-double"></i><span>Fertig</span></div>
+            </div>
         </section>
 
-        <main id="productGrid" class="grid"></main>
-
-        <footer>
-            <p>&copy; 2024 Velocity Rides - Alle Rechte vorbehalten.</p>
-        </footer>
+        <main id="productGrid" class="product-grid fade-in"></main>
     </div>
 
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
+    <div id="modal" class="modal-overlay">
+        <div class="glass-card modal-content slide-up">
+            <button class="close-btn" onclick="closeModal()">&times;</button>
             <div id="modalDetails"></div>
-            <hr>
-            <div class="pending-form">
-                <h3>Interesse bestätigen</h3>
-                <input type="text" id="contactInput" placeholder="Dein Kontakt (z.B. TikTok @user)">
-                <button id="confirmBtn" class="btn-confirm">Set to Pending</button>
+            <div class="modal-action-area">
+                <div class="input-group">
+                    <i class="fab fa-discord"></i>
+                    <input type="text" id="contactInput" placeholder="Discord / TikTok Name">
+                </div>
+                <button id="confirmBtn" class="btn-confirm">Bestätigen & Reservieren</button>
             </div>
         </div>
     </div>
