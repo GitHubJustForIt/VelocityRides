@@ -1,41 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const loginBtn = document.getElementById('login-btn');
-    const logoutBtn = document.getElementById('logout-btn');
-    const usernameInput = document.getElementById('username-input');
-    
-    // Check if logged in
-    const storedUser = localStorage.getItem('velocity_user');
-    if (storedUser) {
-        showDashboard(storedUser);
+    const user = localStorage.getItem('v_user');
+    if (user) {
+        showApp(user);
     }
 
-    // Login Action
-    loginBtn.addEventListener('click', () => {
-        const user = usernameInput.value.trim();
-        if (user) {
-            localStorage.setItem('velocity_user', user);
-            showDashboard(user);
-        } else {
-            alert("Bitte gib einen Usernamen ein.");
+    document.getElementById('login-btn').addEventListener('click', () => {
+        const input = document.getElementById('username-input').value.trim();
+        if (input) {
+            localStorage.setItem('v_user', input);
+            showApp(input);
         }
     });
 
-    // Logout Action
-    if(logoutBtn) {
-        logoutBtn.addEventListener('click', () => {
-            localStorage.removeItem('velocity_user');
-            location.reload(); // Seite neu laden
-        });
-    }
+    document.getElementById('logout-btn').addEventListener('click', () => {
+        localStorage.removeItem('v_user');
+        location.reload();
+    });
 });
 
-function showDashboard(username) {
+function showApp(user) {
     document.getElementById('login-container').classList.add('hidden');
     document.getElementById('app').classList.remove('hidden');
-    document.getElementById('display-username').innerText = username;
-    
-    // Starte die App-Logik (aus app.js)
-    if (typeof initApp === 'function') {
-        initApp();
-    }
+    document.getElementById('display-username').innerText = user;
+    if (window.initApp) window.initApp();
 }
