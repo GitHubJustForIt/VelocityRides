@@ -1,38 +1,38 @@
-// State
-let projects = []; // Lädt initialProjects
+// Daten und Status
+let projects = [];
 let currentUser = "";
-let pendingList = []; // Array von IDs
+let pendingList = [];
 
-// DOM Elements
 const grid = document.getElementById('projects-grid');
 const modal = document.getElementById('product-modal');
 const closeModalBtn = document.querySelector('.close-modal');
 const confirmBtn = document.getElementById('confirm-pending-btn');
 
-// 1. Initialisierung
+// --- INIT ---
 function initApp() {
     currentUser = localStorage.getItem('velocity_user');
-    
-    // Pending Liste aus LocalStorage laden
     const storedPending = localStorage.getItem('velocity_pending');
     pendingList = storedPending ? JSON.parse(storedPending) : [];
 
-    // Projekte laden (Simuliert Datenbank)
+    // Lade Projekte aus data.js
     projects = [...initialProjects];
-
-    // Clean Pending: Falls ein Produkt global "Sold" ist (purchased = true),
-    // aber wir es in "Pending" haben, muss es aus Pending raus.
-    cleanPending();
-
+    cleanPending(); // Bereinigen
+    
+    // Initial Render All
     render(projects);
 }
 
-// 2. Rendering
+// --- RENDER ENGINE ---
 function render(list) {
     grid.innerHTML = "";
+    
+    // Animation reset für Grid
+    grid.style.animation = 'none';
+    grid.offsetHeight; /* trigger reflow */
+    grid.style.animation = 'fadeInUp 0.8s ease-out';
 
     if (list.length === 0) {
-        grid.innerHTML = "<p style='text-align:center; width:100%; color:#777;'>Keine Produkte gefunden.</p>";
+        grid.innerHTML = "<p style='grid-column: 1/-1; text-align:center; color:#555;'>No templates found.</p>";
         return;
     }
 
@@ -40,130 +40,112 @@ function render(list) {
         const card = document.createElement('div');
         card.classList.add('card');
         
-        // Status ermitteln
         let badgeHTML = "";
-        let statusClass = "";
-        
-        // Logik Hierarchie:
-        // 1. Ist es global verkauft an MICH? -> OWNED
-        // 2. Ist es global verkauft an ANDERE? -> SOLD
-        // 3. Habe ich es in meiner Pending Liste? -> PENDING
-        
+        let statusClass = "available";
+
         const isOwnedByMe = proj.purchased && proj.buyer === currentUser;
         const isSoldToOther = proj.purchased && proj.buyer !== currentUser;
         const isPending = pendingList.includes(proj.id);
 
         if (isOwnedByMe) {
-            badgeHTML = `<div class="card-badge badge-owned">OWNED</div>`;
+            badgeHTML = `<div class="card-badge badge-owned"><i class="fas fa-check"></i> OWNED</div>`;
             statusClass = "owned";
         } else if (isSoldToOther) {
             badgeHTML = `<div class="card-badge badge-sold">SOLD</div>`;
             statusClass = "sold";
         } else if (isPending) {
-            badgeHTML = `<div class="card-badge badge-pending">PENDING</div>`;
+            badgeHTML = `<div class="card-badge badge-pending"><i class="fas fa-clock"></i> PENDING</div>`;
             statusClass = "pending";
         }
 
         card.innerHTML = `
-            <div class="card-img" style="background-image: url('${proj.image}');"></div>
-            ${badgeHTML}
+            <div class="card-img" style="background-image: url('${proj.image}');">
+                ${badgeHTML}
+            </div>
             <div class="card-body">
-                <span class="card-price">${proj.price}</span>
                 <h3 class="card-title">${proj.title}</h3>
-                <p style="color:#aaa; font-size:0.9rem;">${proj.description}</p>
+                <span class="card-price">${proj.price}</span>
+                <p style="color:#888; font-size:0.85rem; margin-top:5px;">${proj.description.substring(0, 50)}...</p>
             </div>
         `;
 
-        // Klick Event für Modal
         card.addEventListener('click', () => openModal(proj, statusClass));
         grid.appendChild(card);
     });
 }
 
-// 3. Modal Logic
+// --- MODAL SYSTEM ---
 function openModal(proj, status) {
-    // Populate Data
     document.getElementById('modal-img').src = proj.image;
     document.getElementById('modal-title').innerText = proj.title;
     document.getElementById('modal-desc').innerText = proj.description;
     document.getElementById('modal-price').innerText = proj.price;
-    document.getElementById('modal-gamepass').innerText = proj.gamepass;
-
-    // Tags rendering
+    document.getElementById('modal-gamepass').innerText = proj.gamepass || "None";
+    
     const tagsContainer = document.getElementById('modal-tags');
-    tagsContainer.innerHTML = proj.tags.map(t => `<span>#${t}</span>`).join('');
+    tagsContainer.innerHTML = (proj.tags || []).map(t => `<span>#${t}</span>`).join('');
 
-    // Action Logic basierend auf Status
     const actionArea = document.getElementById('modal-action-area');
     const statusMsg = document.getElementById('modal-status-msg');
     const contactInput = document.getElementById('contact-input');
 
     actionArea.classList.remove('hidden');
     statusMsg.classList.add('hidden');
-    statusMsg.innerHTML = "";
-    confirmBtn.onclick = null; // Reset Listener
+    confirmBtn.onclick = null;
+    confirmBtn.disabled = false;
+    confirmBtn.innerHTML = `Request Purchase <i class="fas fa-arrow-right"></i>`;
 
     if (status === 'sold') {
         actionArea.classList.add('hidden');
         statusMsg.classList.remove('hidden');
-        statusMsg.innerHTML = `<p style="color:var(--danger); text-align:center;">Dieses Produkt ist bereits verkauft.</p>`;
+        statusMsg.innerHTML = `<p style="color:var(--danger); text-align:center; font-weight:bold;">SOLD OUT</p>`;
     } else if (status === 'owned') {
         actionArea.classList.add('hidden');
         statusMsg.classList.remove('hidden');
-        statusMsg.innerHTML = `<p style="color:var(--success); text-align:center;">Du besitzt dieses Produkt bereits. Checke deine Downloads.</p>`;
+        statusMsg.innerHTML = `<p style="color:var(--success); text-align:center; font-weight:bold;">ALREADY OWNED</p>`;
     } else if (status === 'pending') {
         actionArea.classList.add('hidden');
         statusMsg.classList.remove('hidden');
-        statusMsg.innerHTML = `<p style="color:var(--warning); text-align:center;">Anfrage läuft. Warte auf Kontakt vom Team.</p>`;
+        statusMsg.innerHTML = `<p style="color:var(--warning); text-align:center; font-weight:bold;">PENDING APPROVAL</p>`;
     } else {
-        // Available - Logic for Confirm
         confirmBtn.onclick = () => {
             const contact = contactInput.value.trim();
             if(!contact) {
-                alert("Bitte Kontaktmöglichkeit angeben!");
+                alert("Please enter your Discord or Contact info.");
                 return;
             }
             addPending(proj, contact);
         };
     }
-
     modal.classList.remove('hidden');
 }
 
-function closeModal() {
-    modal.classList.add('hidden');
-}
-
+function closeModal() { modal.classList.add('hidden'); }
 closeModalBtn.addEventListener('click', closeModal);
-window.addEventListener('click', (e) => {
-    if (e.target == modal) closeModal();
-});
+window.addEventListener('click', (e) => { if (e.target == modal) closeModal(); });
 
-// 4. Pending & Webhook
+// --- ACTIONS ---
 function addPending(proj, contact) {
-    // 1. Add to Array
     pendingList.push(proj.id);
-    
-    // 2. Save to LocalStorage
     localStorage.setItem('velocity_pending', JSON.stringify(pendingList));
     
-    // 3. Send Webhook
-    sendWebhook(proj, currentUser, contact);
+    // Button Feedback
+    confirmBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Sending...`;
+    confirmBtn.disabled = true;
 
-    // 4. UI Feedback
-    alert("Anfrage gesendet! Status auf PENDING gesetzt.");
-    closeModal();
-    render(projects); // Re-render to show Badge
+    // Simulate Network Delay for effect
+    setTimeout(() => {
+        sendWebhook(proj, currentUser, contact);
+        closeModal();
+        render(projects);
+    }, 800);
 }
 
 function cleanPending() {
-    // Entfernt Pending Items, die in der Zwischenzeit verkauft wurden
     const newPending = pendingList.filter(id => {
         const p = projects.find(x => x.id === id);
-        // Behalten, wenn Projekt existiert UND nicht verkauft ist
-        return p && !p.purchased; 
+        return p && !p.purchased;
     });
-    
     if (newPending.length !== pendingList.length) {
         pendingList = newPending;
         localStorage.setItem('velocity_pending', JSON.stringify(pendingList));
@@ -171,50 +153,31 @@ function cleanPending() {
 }
 
 function sendWebhook(product, user, contact) {
-    if (!WEBHOOK_URL || WEBHOOK_URL.includes("HIER_DEINE")) {
-        console.warn("Webhook URL nicht konfiguriert.");
-        return;
-    }
-
+    if (!WEBHOOK_URL || WEBHOOK_URL.includes("HIER")) return;
+    
     const payload = {
-        username: "Velocity Rides Bot",
+        username: "Velocity Sales Bot",
         embeds: [{
-            title: "🛒 New Purchase Request",
-            color: 16776960, // Yellow
+            title: "🚀 New Order Request",
+            color: 6512369, // Purple
             fields: [
                 { name: "Product", value: product.title, inline: true },
                 { name: "Price", value: product.price, inline: true },
-                { name: "Buyer (User)", value: user, inline: false },
-                { name: "Contact Method", value: contact, inline: false },
-                { name: "Status", value: "PENDING", inline: true }
+                { name: "Buyer", value: user, inline: true },
+                { name: "Contact", value: `\`${contact}\``, inline: false }
             ],
             footer: { text: "Velocity Rides Dashboard" },
             timestamp: new Date().toISOString()
         }]
     };
-
-    fetch(WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-    }).catch(err => console.error("Webhook Error:", err));
+    fetch(WEBHOOK_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
 }
 
-// 5. Filter Logic
 function filterProjects(type) {
-    // Buttons Active State
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     event.target.classList.add('active');
-
-    if (type === 'all') {
-        render(projects);
-    } else if (type === 'pending') {
-        // Zeige nur items aus meiner pendingList
-        const pendingProjs = projects.filter(p => pendingList.includes(p.id));
-        render(pendingProjs);
-    } else if (type === 'purchased') {
-        // Zeige nur Items, die owned sind
-        const ownedProjs = projects.filter(p => p.purchased && p.buyer === currentUser);
-        render(ownedProjs);
-    }
+    
+    if (type === 'all') render(projects);
+    else if (type === 'pending') render(projects.filter(p => pendingList.includes(p.id)));
+    else if (type === 'purchased') render(projects.filter(p => p.purchased && p.buyer === currentUser));
 }
