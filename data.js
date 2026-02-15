@@ -12,10 +12,11 @@ const templates = [
     {
         id: '1',
         title: 'Boomerang',
-        description: 'A family-friendly ride with a unqiue layout.',
+        description: 'A family-friendly ride with a unique layout.',
         price: 80000,
         gamepass: 'Non-Collision (optional), Ride Operation (optional)',
-        image: '',
+        // Link zu deinem hochgeladenen Bild
+        image: 'https://p7.itc.cn/images01/20210515/fed14bd307114e739bd190ce3513b5e8.jpg', 
         purchased: true,      // true = verkauft, false = verfügbar
         buyer: 'BananaToGoApfel1',           // Username des Käufers (wenn verkauft)
         tags: ['Family', 'Attraction', 'Boomerang']
