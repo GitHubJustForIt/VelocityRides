@@ -295,21 +295,32 @@ async function handlePurchaseSubmit(event) {
 // Discord Webhook
 // ============================================
 
+// Hier deine Discord Webhook URL einfügen
+function getWebhookUrl() {
+    return "https://discordapp.com/api/webhooks/1472624952917364998/dLUkhFwa2ZyEhrNbOHfwyRe3ufr8BtwzgH_kcni2fgtugwfaABMOq3vwdPTzfqJ9Q2OE";
+}
+
 async function sendDiscordWebhook(template, contact) {
     const webhookUrl = getWebhookUrl();
     
+    // Validierung der URL
+    if (!webhookUrl || webhookUrl.includes("HIER_EINFÜGEN")) {
+        console.error("❌ Webhook URL fehlt oder ist ungültig!");
+        return false;
+    }
+
     const embed = {
         title: '🎮 New Purchase Request - Velocity Rides',
         color: 3447003, // Professional Blue
         fields: [
             {
                 name: '👤 Username',
-                value: currentUser,
+                value: currentUser || "Unknown User",
                 inline: true
             },
             {
                 name: '🆔 Product ID',
-                value: template.id,
+                value: String(template.id),
                 inline: true
             },
             {
@@ -331,22 +342,19 @@ async function sendDiscordWebhook(template, contact) {
                 name: 'Gamepass',
                 value: template.gamepass,
                 inline: true
-            },
-            {
-                name: 'Tags',
-                value: template.tags.join(', '),
-                inline: false
             }
         ],
         timestamp: new Date().toISOString(),
         footer: {
             text: 'Velocity Rides Dashboard'
-        },
-        thumbnail: {
-            url: template.image
         }
     };
-    
+
+    // Thumbnail nur hinzufügen, wenn ein Bild vorhanden ist
+    if (template.image) {
+        embed.thumbnail = { url: template.image };
+    }
+
     try {
         const response = await fetch(webhookUrl, {
             method: 'POST',
@@ -354,14 +362,17 @@ async function sendDiscordWebhook(template, contact) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                content: `🔔 **Neue Bestellung von ${currentUser}!**`,
                 embeds: [embed]
             })
         });
-        
+
         if (!response.ok) {
-            throw new Error('Webhook request failed');
+            const errorData = await response.json();
+            console.error('Discord API Error:', errorData);
+            throw new Error(`Webhook request failed with status ${response.status}`);
         }
-        
+
         console.log('✅ Discord notification sent successfully');
         return true;
     } catch (error) {
