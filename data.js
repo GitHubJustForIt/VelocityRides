@@ -6,46 +6,24 @@ const WEBHOOK_URL = "https://discordapp.com/api/webhooks/1472624952917364998/dLU
 const initialProjects = [
     {
         id: 1,
-        title: "Space Adventure Hub",
-        description: "A complete sci-fi lobby with gravity systems.",
-        price: "$14.99",
-        gamepass: "Galaxy Pass Required",
-        image: "https://via.placeholder.com/400x200/1e1e2e/ffffff?text=Space+Adventure", // Platzhalter
-        tags: ["Sci-Fi", "Lobby", "Scripted"],
-        purchased: false, // Standardmäßig verfügbar
+        title: "Neon City Hub",
+        description: "Ein futuristischer Cyberpunk-Spawn mit Neon-Effekten und optimierter Performance.",
+        price: "$19.99",
+        gamepass: "Lobby Pass",
+        image: "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=800&q=80",
+        tags: ["Cyberpunk", "Spawn", "Neon"],
+        purchased: false,
         buyer: null
     },
     {
         id: 2,
-        title: "Racing System V2",
-        description: "Advanced car physics and lap timer.",
-        price: "$29.99",
-        gamepass: "None",
-        image: "https://via.placeholder.com/400x200/312e81/ffffff?text=Racing+V2",
-        tags: ["Cars", "System", "Physics"],
-        purchased: true, 
-        buyer: "OtherUser99" // Dieses Item ist SOLD (da nicht wir der Käufer sind)
-    },
-    {
-        id: 3,
-        title: "Mystery Mansion",
-        description: "Horror map with jumpscares pre-configured.",
-        price: "$9.99",
-        gamepass: "Horror Pack",
-        image: "https://via.placeholder.com/400x200/3f0e40/ffffff?text=Mystery+Mansion",
-        tags: ["Horror", "Map"],
-        purchased: false,
-        buyer: null
-    },
-    {
-        id: 4,
-        title: "Tycoon Kit Starter",
-        description: "Everything you need to build a tycoon.",
-        price: "$4.99",
-        gamepass: "None",
-        image: "https://via.placeholder.com/400x200/064e3b/ffffff?text=Tycoon+Kit",
-        tags: ["Tycoon", "Starter"],
-        purchased: false,
-        buyer: null
+        title: "Medieval Kingdom",
+        description: "Großes Schloss-Template mit Marktplatz und detaillierten Texturen.",
+        price: "$24.99",
+        gamepass: "Kingdom Member",
+        image: "https://images.unsplash.com/photo-1599423300746-b62533397364?auto=format&fit=crop&w=800&q=80",
+        tags: ["Medieval", "Large", "Castle"],
+        purchased: true,
+        buyer: "ShadowNinja"
     }
 ];
