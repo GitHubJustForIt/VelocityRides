@@ -1,220 +1,174 @@
-/* ================= THEME ================= */
-
-:root{
-  --bg: #0b0e14;
-  --card: rgba(255,255,255,0.06);
-  --border: rgba(255,255,255,0.1);
-  --accent: #5f7cff;
-  --text: #fff;
-  --muted: #aaa;
+:root {
+    --bg-dark: #121212;
+    --card-bg: #1e1e1e;
+    --primary: #3b82f6; /* Blau */
+    --accent: #8b5cf6;  /* Lila */
+    --text-main: #ffffff;
+    --text-muted: #a1a1aa;
+    --success: #10b981;
+    --warning: #f59e0b; /* Pending */
+    --danger: #ef4444;  /* Sold */
 }
 
-*{
-  box-sizing: border-box;
-  font-family: 'Inter', sans-serif;
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    margin: 0;
+    padding: 0;
 }
 
-body{
-  margin: 0;
-  background: linear-gradient(135deg,#0b0e14,#141926);
-  color: var(--text);
+/* Utilities */
+.hidden { display: none !important; }
+
+/* Login */
+#login-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #0f172a, #312e81);
 }
 
-/* ================= LOGIN ================= */
-
-#loginBox{
-  position: fixed;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0,0,0,0.9);
-  z-index: 2000;
+.login-box {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    width: 300px;
 }
 
-.login-card{
-  background: var(--card);
-  border: 1px solid var(--border);
-  padding: 35px;
-  border-radius: 20px;
-  text-align: center;
-  backdrop-filter: blur(15px);
+.login-box input {
+    width: 90%;
+    padding: 10px;
+    margin: 15px 0;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background: #2a2a2a;
+    color: white;
 }
 
-.login-card input{
-  width: 100%;
-  padding: 12px;
-  margin: 15px 0;
-  border-radius: 10px;
-  border: 1px solid #333;
-  background: #111;
-  color: white;
+#login-btn {
+    width: 100%;
+    padding: 10px;
+    background: var(--primary);
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-.login-card button{
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border: none;
-  background: var(--accent);
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
+/* Dashboard Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: #1a1a1a;
+    align-items: center;
+    border-bottom: 1px solid #333;
 }
 
-.login-card button:hover{
-  transform: translateY(-2px);
-  opacity: 0.9;
+.logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
+#logout-btn { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 1.2rem; margin-left: 10px;}
+
+/* Steps Animation */
+.steps-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background: #161616;
+}
+.step { text-align: center; width: 150px; }
+.step .icon { font-size: 1.5rem; color: var(--accent); margin-bottom: 5px; }
+.step p { font-size: 0.8rem; color: var(--text-muted); }
+.line { width: 50px; height: 2px; background: #333; margin: 0 10px; margin-bottom: 20px;}
+
+/* Filters */
+.filters { text-align: center; margin: 20px 0; }
+.filter-btn {
+    background: #2a2a2a;
+    border: 1px solid #444;
+    color: white;
+    padding: 8px 16px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: 0.3s;
+}
+.filter-btn:hover, .filter-btn.active { background: var(--primary); border-color: var(--primary); }
+
+/* Main Grid */
+#projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-/* ================= HEADER ================= */
-
-header{
-  padding: 30px;
-  text-align: center;
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(10px);
+/* Card */
+.card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    position: relative;
 }
+.card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.5); }
 
-header h1 i{
-  color: var(--accent);
+.card-img { height: 160px; background-color: #333; background-size: cover; background-position: center; }
+.card-body { padding: 15px; }
+.card-title { margin: 0 0 10px 0; font-size: 1.2rem; }
+.card-price { float: right; color: var(--success); font-weight: bold; }
+.card-badge {
+    position: absolute; top: 10px; right: 10px;
+    padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; color: #000;
 }
+.badge-sold { background: var(--danger); color: white; }
+.badge-pending { background: var(--warning); }
+.badge-owned { background: var(--success); color: white; }
 
-#userDisplay{
-  margin-top: 10px;
+/* Modal */
+.modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+    opacity: 1; transition: opacity 0.3s;
 }
-
-/* ================= GRID ================= */
-
-#grid{
-  padding: 40px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
+.modal.hidden { display: none !important; opacity: 0; }
+.modal-content {
+    background: var(--card-bg);
+    width: 90%; max-width: 600px;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
-
-/* ================= CARD ================= */
-
-.card{
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  overflow: hidden;
-  backdrop-filter: blur(15px);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-  transition: 0.4s;
-  cursor: pointer;
+.close-modal {
+    position: absolute; top: 10px; right: 20px;
+    font-size: 2rem; cursor: pointer; color: white; z-index: 10;
 }
-
-.card:hover{
-  transform: translateY(-8px) scale(1.01);
+.modal-body { padding: 0; display: flex; flex-direction: column; }
+#modal-img { width: 100%; height: 200px; object-fit: cover; }
+.modal-details { padding: 20px; }
+.modal-info-box { background: #252525; padding: 10px; border-radius: 5px; margin: 10px 0; }
+.tags-container span {
+    background: #333; padding: 2px 8px; border-radius: 4px; font-size: 0.8rem; margin-right: 5px;
 }
-
-.card img{
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
+#contact-input { width: 100%; padding: 10px; margin-top: 5px; box-sizing: border-box; }
+.action-btn {
+    width: 100%; padding: 12px; margin-top: 15px;
+    background: var(--primary); border: none; color: white;
+    font-size: 1rem; border-radius: 5px; cursor: pointer;
 }
+.action-btn:disabled { background: #555; cursor: not-allowed; }
 
-.card h3{
-  margin: 10px 15px 5px;
-}
-
-.card p{
-  color: var(--muted);
-  font-size: 0.9rem;
-  padding: 0 15px 15px;
-}
-
-/* ================= FOOTER ================= */
-
-footer{
-  text-align: center;
-  padding: 20px;
-  border-top: 1px solid var(--border);
-  color: var(--muted);
-}
-
-/* ================= BUTTONS ================= */
-
-.btn{
-  width: 100%;
-  padding: 12px;
-  margin-top: 12px;
-  border: none;
-  background: var(--accent);
-  color: white;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.btn:hover{
-  transform: translateY(-2px);
-  opacity: 0.9;
-}
-
-/* ================= MODAL ================= */
-
-#modal{
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.9);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-}
-
-#modal.active{
-  display: flex;
-}
-
-.modal-box{
-  background: var(--card);
-  border: 1px solid var(--border);
-  width: 90%;
-  max-width: 520px;
-  padding: 25px;
-  border-radius: 18px;
-  backdrop-filter: blur(15px);
-  animation: pop 0.3s ease;
-}
-
-@keyframes pop{
-  from{transform: scale(0.9); opacity:0;}
-  to{transform: scale(1); opacity:1;}
-}
-
-.modal-box img{
-  width: 100%;
-  border-radius: 12px;
-  margin-bottom: 15px;
-}
-
-/* ================= BADGES ================= */
-
-.badge{
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-.sold{
-  background: red;
-}
-
-.pending{
-  background: orange;
-}
-
-.owned{
-  background: limegreen;
-  color: black;
-}
+footer { text-align: center; padding: 20px; color: #555; font-size: 0.8rem; }
